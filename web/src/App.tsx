@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { Container } from './GlobalStyles';
+import { Home } from './pages';
 
 function App() {
   return (
-    <div className="app">
-      <h1>Happy</h1>
-    </div>
+    <Container>
+      <Home />
+    </Container>
   );
-}
+};
 
 export default App;
