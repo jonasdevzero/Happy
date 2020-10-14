@@ -6,6 +6,8 @@ const routes = Router()
 
 // MVC - Model Views Controllers
 
-routes.post('/orphanages', OrphanagesController.create)
+routes.get('/orphanages', OrphanagesController.index);
+routes.get('/orphanages/:id', OrphanagesController.show);
+routes.post('/orphanages', OrphanagesController.create);
 
 export default routes;
