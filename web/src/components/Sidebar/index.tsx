@@ -1,32 +1,67 @@
 import React from 'react';
 
-import { 
+import {
     Container,
+    FixedContainer,
     Header,
-    Logo, 
-    Title, 
+    Logo,
+    Title,
     SubTitle,
     Footer,
     State,
-    City
+    City,
+    Button
 } from './styles';
 import logo from '../../images/map-marker.svg';
 
-function Sidebar() {
-    return (
-        <Container>
-            <Header>
-                <Logo src={logo} alt="Happy" />
+interface SidebarChildren {
+    children: React.ReactNode,
+};
 
-                <Title>Escolha um orfanato no mapa</Title>
-                <SubTitle>Muitas crianças estão espreando a sua visita :)</SubTitle>
-            </Header>
-            <Footer>
-                <City>Nova Cruz</City>
-                <State>Rio Grande do Norte</State>
-            </Footer>
-        </Container>
-    );
+interface ButtonProps {
+    children: React.ReactNode,
+    type?: 'button' | 'submit',
+    onClick(e: React.MouseEvent<HTMLElement>): void
+}
+
+function Sidebar({ children }: SidebarChildren) {
+    return <Container>{children}</Container>
+};
+
+Sidebar.FixedContainer = function SidebarFixedContainer({ children }: SidebarChildren) {
+    return <FixedContainer>{children}</FixedContainer>
+}
+
+Sidebar.Header = function SidebarHeader({ children }: SidebarChildren) {
+    return <Header>{children}</Header>
+};
+
+Sidebar.Logo = function SidebarLogo() {
+    return <Logo src={logo} alt="Happy" /> // Static
+};
+
+Sidebar.Title = function SidebarTitle({ children }: SidebarChildren) {
+    return <Title>{children}</Title>
+};
+
+Sidebar.SubTitle = function SidebarSubTitle({ children }: SidebarChildren) {
+    return <SubTitle>{children}</SubTitle>
+};
+
+Sidebar.City = function SidebarCity({ children }: SidebarChildren) {
+    return <City>{children}</City>
+};
+
+Sidebar.State = function SidebarState({ children }: SidebarChildren) {
+    return <State>{children}</State>
+};
+
+Sidebar.Button = function SideBarButton({ children, type, onClick }: ButtonProps) {
+    return <Button type={type} onClick={onClick}>{children}</Button>
+};
+
+Sidebar.Footer = function SidebarFooter({ children }: SidebarChildren) {
+    return <Footer>{children}</Footer>
 };
 
 export default Sidebar;
