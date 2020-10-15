@@ -27,7 +27,7 @@ export default {
     },
 
     async create(req: Request, res: Response) {
-        const {
+        const  {
             name,
             latitude,
             longitude,
@@ -60,7 +60,7 @@ export default {
             latitude: Yup.number().required(),
             longitude: Yup.number().required(),
             about: Yup.string().required().max(300),
-            instruction: Yup.string().required(),
+            instructions: Yup.string().required(),
             openning_hours: Yup.string().required(),
             open_on_weekends: Yup.boolean().required(),
             images: Yup.array(Yup.object().shape({
