@@ -55,14 +55,14 @@ function OrphanagesMap() {
                     >
                         <Popup closeButton={false} minWidth={240} maxWidth={240} minHeight={42} maxHeight={100} className="map-popup">
                             Orfanato do povo
-                        <Link to="/">
+                        <Link to="/orphanages/1">
                                 <FiArrowRight size={20} color="#fff" />
                             </Link>
                         </Popup>
                     </Marker>
                 </Map>
 
-                <Link to="/new">
+                <Link to="/orphanages/create">
                     <FiPlus size={32} color="#fff" />
                 </Link>
             </Container>
