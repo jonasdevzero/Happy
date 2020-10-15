@@ -1,14 +1,15 @@
-import React from "react";
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from 'react-router-dom';
+import api from '../../services/api';
 
 import { Map, Marker, TileLayer } from "react-leaflet";
 
-import { FaWhatsapp } from "react-icons/fa";
+// import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo, FiArrowLeft } from "react-icons/fi";
 import { MapIcon } from '../../utils/MapIcon';
 
 import { Sidebar } from '../../components';
-import { 
+import {
   Container,
   Inner,
   Details,
@@ -21,17 +22,44 @@ import {
   Description,
   MapContainer,
   DetailsFooter,
-  Link,
   Hr,
   InstructionTitle,
   OpenDetails,
   DetailHour,
   DetailOpenOnWeekends,
-  Contact 
+  // Contact
 } from './styles';
 
+interface Orphanage {
+  name: string;
+  about: string;
+  instructions: string;
+  latitude: number;
+  longitude: number;
+  openning_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+};
+
+interface OrphanageParams {
+  id: string,
+};
+
 export default function Orphanage() {
+  const [orphanage, setOrphanage] = useState<Orphanage>();
+  const [currentImage, setCurrentImage] = useState(0);
+  const params = useParams<OrphanageParams>();
   const { goBack } = useHistory();
+
+  useEffect(() => {
+    api.get(`orphanages/${params.id}`)
+      .then(resp => {
+        setOrphanage(resp.data);
+      });
+  }, [params.id]);
 
   return (
     <Container>
@@ -47,39 +75,32 @@ export default function Orphanage() {
 
       <Inner>
         <Details>
-          <Image src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
+          <Image src={orphanage?.images[currentImage].url} alt={orphanage?.name} />
 
           <Images>
-            <Button className="active" type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
-            <Button type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
-            <Button type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
-            <Button type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
-            <Button type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
-            <Button type="button">
-              <ImageButton src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </Button>
+            {orphanage?.images.map((image, i) => (
+              <Button 
+                onClick={_ => setCurrentImage(i)} 
+                type="button" 
+                key={image.id}
+                className={currentImage === i ? 'active' : ''}
+              >
+                <ImageButton src={image.url} alt={orphanage.name} />
+              </Button>
+            ))}
           </Images>
-          
+
           <DetailsContent>
-            <Name>Lar das meninas</Name>
+            <Name>{orphanage?.name}</Name>
             <Description>
-              Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social.
+              {orphanage?.instructions}
             </Description>
 
             <MapContainer>
-              <Map 
-                center={[-27.2092052,-49.6401092]} 
-                zoom={16} 
+              <Map
+                // center={[orphanage?.latitude, orphanage?.longitude]} -> ERROR -> Alternative bellow!
+                center={[orphanage?.latitude ? orphanage.latitude : 0, orphanage?.longitude ? orphanage.longitude : 0]}
+                zoom={16}
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
                 touchZoom={false}
@@ -87,39 +108,53 @@ export default function Orphanage() {
                 scrollWheelZoom={false}
                 doubleClickZoom={false}
               >
-                <TileLayer 
+                <TileLayer
                   url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
-                <Marker interactive={false} icon={MapIcon} position={[-27.2092052,-49.6401092]} />
+                <Marker
+                  interactive={false}
+                  icon={MapIcon}
+                  position={[orphanage?.latitude ? orphanage.latitude : 1, orphanage?.longitude ? orphanage.longitude : 1]} 
+                />
               </Map>
 
               <DetailsFooter>
-                <Link to="/">Ver rotas no Google Maps</Link>
+                <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage?.latitude},${orphanage?.longitude}`}>
+                  Ver rotas no Google Maps
+                </a>
               </DetailsFooter>
             </MapContainer>
 
             <Hr />
 
             <InstructionTitle>Instruções para visita</InstructionTitle>
-            <Description>Venha como se sentir mais à vontade e traga muito amor para dar.</Description>
+            <Description>{orphanage?.instructions}</Description>
 
             <OpenDetails>
               <DetailHour>
                 <FiClock size={32} color="#15B6D6" />
                 Segunda à Sexta <br />
-                8h às 18h
+                {orphanage?.openning_hours}
               </DetailHour>
-              <DetailOpenOnWeekends>
-                <FiInfo size={32} color="#39CC83" />
-                Atendemos <br />
-                fim de semana
-              </DetailOpenOnWeekends>
+              {orphanage?.open_on_weekends ?
+                <DetailOpenOnWeekends>
+                  <FiInfo size={32} color="#FF669D" />
+                  Atendemos <br />
+                  fim de semana
+                </DetailOpenOnWeekends>
+                :
+                <DetailOpenOnWeekends className="dont-open">
+                  <FiInfo size={32} color="#FF6690" />
+                  Não atendemos <br />
+                  fim de semana
+                </DetailOpenOnWeekends>
+              }
             </OpenDetails>
 
-            <Contact type="button">
+            {/* <Contact type="button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
-            </Contact>
+            </Contact> */}
           </DetailsContent>
         </Details>
       </Inner>

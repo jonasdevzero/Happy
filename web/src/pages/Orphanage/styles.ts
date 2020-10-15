@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { Link as ReactRouterLink } from 'react-router-dom';
 
 export const Container = styled.div`
     display: flex;
@@ -87,12 +86,12 @@ export const MapContainer = styled.div`
 export const DetailsFooter = styled.footer`
     padding: 2rem 0;
     text-align: center;
-`;
 
-export const Link = styled(ReactRouterLink)`
-    color: #0089A5;
-    text-decoration: none;
-    line-height: 2.4rem;
+    a {
+        color: #0089A5;
+        text-decoration: none;
+        line-height: 2.4rem;
+    };
 `;
 
 export const Hr = styled.hr`
@@ -137,6 +136,12 @@ export const DetailOpenOnWeekends = styled.div`
     background: linear-gradient(154.16deg, #EDFFF6 7.85%, #FFFFFF 91.03%);
     border: .1rem solid #A1E9C5;
     color: #37C77F;
+
+    &.dont-open {
+        background: linear-gradient(154.16deg, #FDF0F5 7.85%, #FFFFFF 91.03%);
+        border: .1rem solid #FFBCD4;
+        color: #FF6690;
+    };
 `;
 
 export const Contact = styled.button`
