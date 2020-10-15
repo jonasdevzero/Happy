@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
+import 'leaflet/dist/leaflet.css';
 
 export const GlobalStyles = createGlobalStyle`
     * {

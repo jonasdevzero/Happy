@@ -1,8 +1,5 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import Leaflet from 'leaflet';
-
-import 'leaflet/dist/leaflet.css';
 
 import {
     MapStyle,
@@ -11,14 +8,7 @@ import {
 } from './styles';
 import { Sidebar } from '../../components';
 import { FiPlus, FiArrowRight } from 'react-icons/fi';
-import mapMarker from '../../images/map-marker.svg';
-
-const mapIcon = Leaflet.icon({
-    iconUrl: mapMarker,
-    iconSize: [58, 68],
-    iconAnchor: [29, 68],
-    popupAnchor: [170, 2]
-});
+import { MapIconMarker } from '../../utils/MapIcon';
 
 function OrphanagesMap() {
     return (
@@ -51,7 +41,7 @@ function OrphanagesMap() {
 
                     <Marker
                         position={[-6.4847599, -35.4281936]}
-                        icon={mapIcon}
+                        icon={MapIconMarker}
                     >
                         <Popup closeButton={false} minWidth={240} maxWidth={240} minHeight={42} maxHeight={100} className="map-popup">
                             Orfanato do povo

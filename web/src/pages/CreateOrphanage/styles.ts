@@ -9,14 +9,14 @@ export const Inner = styled.main`
 `;
 
 export const Form= styled.form`
-    width: 700px;
+    width: 70rem;
     margin: 64px auto;
 
     background: #FFFFFF;
-    border: 1px solid #D3E2E5;
+    border: .1rem solid #D3E2E5;
     border-radius: 20px;
 
-    padding: 64px 80px;
+    padding: 6.4rem 8rem;
 
     overflow: hidden;
 `;
@@ -25,76 +25,76 @@ export const Fieldset = styled.fieldset`
     border: 0;;
 
     & + & {
-        margin-top: 80px
-    }
+        margin-top: 8rem;
+    };
 `;
 
 export const Legend = styled.legend`
     width: 100%;
 
-    font-size: 32px;
-    line-height: 34px;
+    font-size: 3.2rem;
+    line-height: 3.4rem;
     color: #5C8599;
-    font-weight: 700;
+    font-weight: 70rem;
 
-    border-bottom: 1px solid #D3E2E5;
-    margin-bottom: 40px;
-    padding-bottom: 24px;
+    border-bottom: .1rem solid #D3E2E5;
+    margin-bottom: 4rem;
+    padding-bottom: 2.4rem;
 `;
 
 export const InputWrapper = styled.div`
     & + & {
-        margin-top: 24px;
+        margin-top: 2.4rem;
     }
 `;
 
 export const Label = styled.label`
     display: flex;
     color: #8FA7B3;
-    margin-bottom: 8px;
-    line-height: 24px;
+    margin-bottom: .8rem;
+    line-height: 2.4rem;
 `;
 
 export const Span = styled.span`
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #8FA7B3;
-    margin-left: 24px;
-    line-height: 24px;
+    margin-left: 2.4rem;
+    line-height: 2.4rem;
 `;
 
 export const Input = styled.input`
     width: 100%;
     background: #F5F8FA;
-    border: 1px solid #D3E2E5;
-    border-radius: 20px;
+    border: .1rem solid #D3E2E5;
+    border-radius: 2rem;
     outline: none;
     color: #5C8599;
 
-    height: 64px;
-    padding: 0 16px;
+    height: 6.4rem;
+    padding: 0 1.6rem;
 `;
 
 export const TextArea = styled.textarea`
     width: 100%;
     background: #F5F8FA;
-    border: 1px solid #D3E2E5;
-    border-radius: 20px;
+    border: .1rem solid #D3E2E5;
+    border-radius: 2rem;
     outline: none;
     color: #5C8599;
 
-    min-height: 120px;
-    max-height: 240px;
+    min-height: 12rem;
+    max-height: 24rem;
     resize: vertical;
-    padding: 16px;
-    line-height: 28px;
+    padding: 1.6rem;
+    line-height: 2.8rem;
 `;
 
 export const NewImage = styled.button`
     width: 100%;
-    height: 64px;
+    height: 6.4rem;
     background: #F5F8FA;
-    border: 1px dashed #96D2F0;
-    border-radius: 20px;
+    border: .1rem dashed #96D2F0;
+    border-radius: 2rem;
     cursor: pointer;
 `;
 
@@ -104,34 +104,34 @@ export const Select = styled.div`
 `;
 
 export const ButtonSelect =  styled.button`
-    height: 64px;
+    height: 6.4rem;
     background: #F5F8FA;
-    border: 1px solid #D3E2E5;
+    border: .1rem solid #D3E2E5;
     color: #5C8599;
     cursor: pointer;
-    border-radius: 20px 0px 0px 20px;
+    border-radius: 2rem 0px 0px 2rem;
 
     & + & {
-        border-radius: 0 20px 20px 0;
+        border-radius: 0 2rem 2rem 0;
         border-left: 0;
     };
 
     &.active {          // need check
         background: #EDFFF6;
-        border: 1px solid #A1E9C5;
+        border: .1rem solid #A1E9C5;
         color: #37C77F;
     };
 `;
 
 export const Submit = styled.button`
-    margin-top: 64px;
+    margin-top: 6.4rem;
 
     width: 100%;
-    height: 64px;
+    height: 6.4rem;
     border: 0;
     cursor: pointer;
     background: #3CDC8C;
-    border-radius: 20px;
+    border-radius: 2rem;
     color: #FFFFFF;
     font-weight: 800;
 
@@ -146,6 +146,6 @@ export const Submit = styled.button`
     };
 
     svg {
-        margin-right: 16px;
+        margin-right: 1.6rem;
     };
 `;

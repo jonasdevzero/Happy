@@ -14,11 +14,10 @@ export const Details = styled.div`
     width: 70rem;
     margin: 6.4rem auto;
 
-    background: #FFFFFF;
     border: 1px solid #D3E2E5;
     border-radius: 2rem;
-
     overflow: hidden;
+    background: #FFFFFF;
 `;
 
 export const Image = styled.img`
@@ -28,13 +27,13 @@ export const Image = styled.img`
 `;
 
 export const Button = styled.button`
-    border: 0;
     height: 8.8rem;
     background: none;
-    cursor: pointer;
+    border: 0;
     border-radius: 2rem;
-    overflow: hidden;
     outline: none;
+    cursor: pointer;
+    overflow: hidden;
     
     opacity: 0.6;
 
@@ -53,7 +52,6 @@ export const Images = styled.div`
     display: grid;
     grid-template-columns: repeat(6 ,1fr);
     column-gap: 1.6rem;
-
     margin: 1.6rem 4rem 0;
 `;
 
@@ -69,16 +67,16 @@ export const Name = styled.h1`
 `;
 
 export const Description = styled.p`
-    line-height: 2.8rem;
     color: #5C8599;
+    line-height: 2.8rem;
     margin-top: 2.4rem;
 `;
 
 export const MapContainer = styled.div`
-    margin-top: 6.4rem;
     background: #E6F7FB;
     border: .1rem solid #B3DAE2;
     border-radius: 2rem;
+    margin-top: 6.4rem;
 
     .leaflet-container {
         border-bottom: .1rem solid #DDE3F0;
@@ -92,17 +90,17 @@ export const DetailsFooter = styled.footer`
 `;
 
 export const Link = styled(ReactRouterLink)`
-    line-height: 2.4rem;
     color: #0089A5;
     text-decoration: none;
+    line-height: 2.4rem;
 `;
 
 export const Hr = styled.hr`
     width: 100%;
     height: .1rem;
     border: 0;
-    background: #D3E2E6;
     margin: 6.4rem 0;
+    background: #D3E2E6;
 `;
 
 export const InstructionTitle = styled.h2`
@@ -112,10 +110,10 @@ export const InstructionTitle = styled.h2`
 `;
 
 export const OpenDetails = styled.div`
-    margin-top: 24px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
+    margin-top: 24px;
 
     div {
         padding: 3.2rem 2.4rem;
@@ -142,21 +140,19 @@ export const DetailOpenOnWeekends = styled.div`
 `;
 
 export const Contact = styled.button`
-    margin-top: 6.4rem;
-
-    width: 100%;
-    height: 6.4rem;
-    border: 0;
-    cursor: pointer;
-    background: #3CDC8C;
-    border-radius: 2rem;
-    color: #FFFFFF;
-    font-weight: 800;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
+    width: 100%;
+    height: 6.4rem;
+    border: 0;
+    border-radius: 2rem;
+    margin-top: 6.4rem;
+    color: #FFFFFF;
+    font-weight: 800;
+    background: #3CDC8C;
+    cursor: pointer;
+    
     transition: background-color 0.2s;
 
     &:hover {

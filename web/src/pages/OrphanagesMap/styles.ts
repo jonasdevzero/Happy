@@ -37,6 +37,7 @@ export const MapStyle = createGlobalStyle`
         background: rgba(255, 255, 255, .8);
         border-radius: 2rem;
         box-shadow: none;
+        padding: .5rem;
     };
     #map-container .map-popup .leaflet-popup-content {
         display: flex;
