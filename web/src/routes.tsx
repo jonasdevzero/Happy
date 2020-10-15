@@ -9,7 +9,8 @@ function Routes() {
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/app" component={OrphanagesMap} />
-                <Route path="/orpahanage/create" component={CreateOrphanages} />
+
+                <Route path="/orphanages/create" component={CreateOrphanages} />
                 <Route path="/orphanages/:id" component={Orphanage} />
             </Switch>
         </Router>

@@ -19,6 +19,12 @@ export const Form= styled.form`
     padding: 6.4rem 8rem;
 
     overflow: hidden;
+
+    .leaflet-container {
+        margin-bottom: 4rem;
+        border: .1rem solid #D3E2E5;
+        border-radius: 2rem;
+    };
 `;
 
 export const Fieldset = styled.fieldset`
@@ -89,13 +95,32 @@ export const TextArea = styled.textarea`
     line-height: 2.8rem;
 `;
 
-export const NewImage = styled.button`
-    width: 100%;
-    height: 6.4rem;
+export const NewImagesContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1.6rem;
+
+    img {
+        width: 100%;
+        height: 9.6rem;
+        object-fit: cover;
+        border-radius: 2rem;
+    };
+`;
+
+export const NewImageLabel = styled.label`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 9.6rem;
     background: #F5F8FA;
     border: .1rem dashed #96D2F0;
     border-radius: 2rem;
     cursor: pointer;
+`;
+
+export const NewImageInput = styled.input`
+    display: none;
 `;
 
 export const Select = styled.div`
