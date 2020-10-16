@@ -49,7 +49,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone this repository
 ```sh
-git clone https://github.com/jonasdevzero/Happy.git
+$ git clone https://github.com/jonasdevzero/Happy.git
 ```
 2. Get a key in <a href="https://mapbox.com" alt="mapbox link">Mapbox</a> and use on line 55 in
 ```sh
@@ -57,13 +57,17 @@ git clone https://github.com/jonasdevzero/Happy.git
 ```
 3. Run the projects in the folders
 
-web -
+3.1 web -
 ```sh
-npm start  or  yarn dev
+$ npm start 
+or
+$ yarn start
 ```
-backend - 
+3.2 backend - 
 ```sh
-npm run dev  or  yarn dev
+$ npm run dev 
+or
+$ yarn dev
 ```
 
 ## Contact
