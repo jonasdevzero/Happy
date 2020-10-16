@@ -55,7 +55,16 @@ git clone https://github.com/jonasdevzero/Happy.git
 ```sh
 /web/src/pages/OrphanagesMap
 ```
-3. run npm start on folder web and run npm run dev on folder backend
+3. Run the projects in the folders
+
+web -
+```sh
+npm start  or  yarn dev
+```
+backend - 
+```sh
+npm run dev  or  yarn dev
+```
 
 ## Contact
 <a target="_blank" href="https://www.linkedin.com/in/jonas-de-oliveira-0561961ab/">
