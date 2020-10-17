@@ -140,7 +140,7 @@ export const DetailOpenOnWeekends = styled.div`
     &.dont-open {
         background: linear-gradient(154.16deg, #FDF0F5 7.85%, #FFFFFF 91.03%);
         border: .1rem solid #FFBCD4;
-        color: #FF6690;
+        color: #FF669D;
     };
 `;
 
