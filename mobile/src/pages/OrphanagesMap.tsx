@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { Feather } from '@expo/vector-icons';
 import mapMarker from '../images/map-marker.png';
@@ -28,12 +28,12 @@ function OrphanagesMap() {
         navigation.navigate('SelectMapPosition');
     };
 
-    useEffect(() => {
+    useFocusEffect(() => {
         api.get('/orphanages')
             .then(resp => {
                 setOrphanages(resp.data);
             });
-    }, []);
+    });
 
     return (
         <View style={styles.container}>

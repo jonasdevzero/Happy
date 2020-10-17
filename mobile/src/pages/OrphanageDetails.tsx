@@ -42,7 +42,6 @@ export default function OrphanageDetails() {
     useEffect(() => {
         api.get(`/orphanages/${params.id}`)
             .then(resp => {
-                console.log(resp.data)
                 setOrphanage(resp.data);
             });
     }, [params.id]);
