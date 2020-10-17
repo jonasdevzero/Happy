@@ -37,6 +37,11 @@ backend -
 - [cors](https://www.npmjs.com/package/cors)
 - [multer](https://www.npmjs.com/package/multer)
 
+<<<<<<< HEAD
+=======
+web - comming soon
+
+>>>>>>> 3de40412bd5f8f7b1f34022de3a135cc7f23dfb8
 ## Getting started
 To get a local copy up and running follow these simple example steps.
 
