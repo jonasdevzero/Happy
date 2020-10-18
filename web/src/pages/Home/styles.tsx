@@ -25,6 +25,17 @@ export const Inner = styled.div`
     background: url(${landing}) no-repeat 80% center;
 `;
 
+export const Header = styled.header`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+export const HeaderContainer = styled.div`
+    display: flex;
+`;
+
 export const Logo = styled.img``;
 
 export const Content = styled.main`
@@ -44,13 +55,10 @@ export const SubTitle = styled.p`
 `;
 
 export const Location = styled.div`
-    position: absolute;
-    top: 0;
-    right: 0;
-
     display: flex;
     flex-direction: column;
-    text-align: right;
+    text-align: left;
+    margin-left: 7rem;
 `;
 
 export const City = styled.strong`
@@ -78,4 +86,22 @@ export const Link = styled(ReactRouterLink)`
     &:hover {
         background-color: #96feff;
     }
+`;
+
+export const AccessRestrict = styled(ReactRouterLink)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22rem;
+    height: 6rem;
+    border-radius: 2rem;
+    background-color: #12D4E0;
+    text-decoration: none;
+    color: #FFF;
+    transition: background-color ease .3s;
+
+    &:hover {
+        background: #96FEFF;
+        color: #15C3D6;
+    }; 
 `;
