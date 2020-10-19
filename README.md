@@ -39,7 +39,7 @@ backend -
 
 web - 
 - [react native](https://reactnative.dev/)
-- (expo)(https://expo.io/)
+- [expo](https://expo.io/)
 
 ## Getting started
 To get a local copy up and running follow these simple example steps.
