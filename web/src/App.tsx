@@ -1,14 +1,15 @@
 import React from 'react';
 
-import useAuth from './hooks/useAuth';
-import { UserContext } from './contexts/userContext';
 import Routes from './routes';
+import { UserContext } from './contexts/UserContext';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
-  const { user, setUser } = useAuth();
+  const { user, setUser } = useAuth()
+  console.log(user);
 
   return (
-    <UserContext.Provider value={{ user, setUser } as any}>
+    <UserContext.Provider value={{ user, setUser }}>
       <Routes />
     </UserContext.Provider>
   );

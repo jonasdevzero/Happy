@@ -133,3 +133,13 @@ export const Button = styled.button`
     margin-top: 3rem;
     cursor: pointer;
 `;
+
+export const Error = styled.strong`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF669D;
+    background-color: #FDF0F5;
+    height: 6.4rem;
+    border-radius: 2rem;
+`;
