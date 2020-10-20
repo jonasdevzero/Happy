@@ -37,7 +37,9 @@ backend -
 - [cors](https://www.npmjs.com/package/cors)
 - [multer](https://www.npmjs.com/package/multer)
 
-web - comming soon
+web - 
+- [react native](https://reactnative.dev/)
+- [expo](https://expo.io/)
 
 ## Getting started
 To get a local copy up and running follow these simple example steps.
