@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { PrivateRoute, IsUserRedirect } from './helpers/protectedRoutes';
 
-import { 
-    Home, 
-    OrphanagesMap, 
-    CreateOrphanages, 
-    Orphanage, 
+import {
+    Home,
+    OrphanagesMap,
+    CreateOrphanages,
+    Orphanage,
     Signin,
-    Dashboard 
+    Dashboard
 } from './pages';
 
 function Routes() {
@@ -20,8 +21,8 @@ function Routes() {
                 <Route path="/orphanages/create" component={CreateOrphanages} />
                 <Route path="/orphanages/:id" component={Orphanage} />
 
-                <Route path="/login" component={Signin} />
-                <Route path="/dashboard" component={Dashboard} />
+                <IsUserRedirect path="/login" component={Signin} redirectTo="/dashboard" />
+                <PrivateRoute path='/dashboard' component={Dashboard} exact />
             </Switch>
         </Router>
     );
