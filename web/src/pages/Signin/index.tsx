@@ -4,9 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi';
 import logo from '../../images/map-marker.svg';
 
-import { UserContext } from '../../contexts/userContext';
-import api from '../../services/api';
-
 import {
     Container,
     Banner,
@@ -25,30 +22,42 @@ import {
     Label,
     Help,
     Button,
-
+    Error
 } from './styles';
 
-function Signin() {
-    const { setUser }: any = useContext(UserContext);
+import { login } from '../../services/user';
+import { UserContext } from '../../contexts/UserContext';
 
+function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const history = useHistory();
     const { goBack } = useHistory();
+
+    const { setUser } = useContext(UserContext);
 
     async function handleAuthUser(e: FormEvent) {
         e.preventDefault();
 
-        const response = await api.post('/user/login', { email, password });
-        const { token, user, error } = response.data;
+        login({ email, password }, remember).then(response => {
+            const { user: { id, name, email }, token, error } = response;
 
-        console.log(error)
+            if (error) {
+                setEmail('');
+                setPassword('');
+                setErrorMessage(error);
+                return;
+            };
 
-        if (remember) {
-            localStorage.setItem('token', JSON.stringify(token))
-        }
-
-        setUser(user);
+            // if (setUser) {
+            //     setUser(userData);
+            // };
+            setUser!({ id, name, email, token });
+            history.push('/dashboard');
+        });
     };
 
     return (
@@ -67,11 +76,13 @@ function Signin() {
                 <Form onSubmit={e => handleAuthUser(e)}>
                     <FormTitle>Fazer login</FormTitle>
 
+                    {errorMessage && <Error>{errorMessage}</Error>}
+
                     <InputWrapper>
                         <Label>E-mail</Label>
-                        <Input 
-                            type="text" 
-                            required 
+                        <Input
+                            type="text"
+                            required
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
@@ -79,9 +90,9 @@ function Signin() {
 
                     <InputWrapper>
                         <Label>Senha</Label>
-                        <Input 
-                            type="password" 
-                            required 
+                        <Input
+                            type="password"
+                            required
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                         />
@@ -89,7 +100,7 @@ function Signin() {
 
                     <CheckWrapper>
                         <Check type="button" onClick={_ => setRemember(!remember)} style={{ backgroundColor: remember ? '#37C77F' : '#F5F8FA' }}>
-                            <FiCheck size={18} color={'#fff'} /> 
+                            <FiCheck size={18} color={'#fff'} />
                         </Check>
                         <Label>Lembrar me</Label>
                         <Help type="button">Esqueci minha senha</Help>
