@@ -1,8 +1,15 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
-interface UserContextProps {
-    user?: {},
-    setUser?: React.Dispatch<React.SetStateAction<{}>>
-}
+interface User {
+    name: string,
+    id: number;
+    email: string;
+    token: string;
+};
 
-export const UserContext = createContext<UserContextProps>({});
+interface UserProvider {
+    user: User | undefined;
+    setUser: React.Dispatch<React.SetStateAction<User | undefined>> | undefined;
+};
+
+export const UserContext = createContext<UserProvider>({ user: undefined, setUser: undefined });
