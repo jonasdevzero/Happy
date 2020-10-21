@@ -27,8 +27,8 @@ export const Icon = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 5.8rem;
-    height: 5.8rem;
+    width: 4.8rem;
+    height: 4.8rem;
     border-radius: 1.6rem;
     background-color: ${({ isActive }: any) => isActive ? '' : '#12AFCB'};
     border: none;

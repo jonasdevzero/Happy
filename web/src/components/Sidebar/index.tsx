@@ -18,13 +18,13 @@ import logo from '../../images/map-marker.svg';
 
 interface SidebarChildren {
     children: React.ReactNode;
-    isActive?: boolean | false;
 };
 
 interface ButtonProps {
-    children: React.ReactNode,
-    type?: 'button' | 'submit',
-    onClick(e: React.MouseEvent<HTMLElement>): void
+    children: React.ReactNode;
+    type?: 'button' | 'submit';
+    onClick(e: React.MouseEvent<HTMLElement>): void;
+    isActive?: boolean | false;
 }
 
 function Sidebar({ children }: SidebarChildren) {
@@ -47,8 +47,8 @@ Sidebar.GroupIcon = function SidebarGroupIcon({ children }: SidebarChildren) {
     return <GroupIcon>{children}</GroupIcon>
 }
 
-Sidebar.Icon = function SidebarIcon({ children, isActive }: SidebarChildren) {
-    return <Icon {...isActive}>{children}</Icon>
+Sidebar.Icon = function SidebarIcon({ children, onClick, type, isActive }: ButtonProps) {
+    return <Icon {...isActive} onClick={onClick} type={type}>{children}</Icon>
 };
 
 Sidebar.Title = function SidebarTitle({ children }: SidebarChildren) {
