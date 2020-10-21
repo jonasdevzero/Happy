@@ -3,12 +3,12 @@ import styled from 'styled-components/macro';
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    width: 54.5rem;
+    width: 54.4rem;
     height: 30.1rem;
     background-color: #fff;
     border: 1px solid #DDE3F0;
     border-radius: 2rem;
-    margin: 0 1.5rem;
+    margin: 1rem;
 `;
 
 export const MapContainer = styled.div`

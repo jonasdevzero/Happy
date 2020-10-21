@@ -9,7 +9,7 @@ import {
     ButtonWrapper,
     Button,
 } from './styles';
-import { FiEdit3, FiTrash } from 'react-icons/fi';
+import { FiEdit3, FiTrash, FiArrowRight } from 'react-icons/fi';
 import { MapIcon } from '../../utils/MapIcon';
 
 
@@ -17,11 +17,12 @@ interface MiniMapProps {
     name: string;
     latitude: number;
     longitude: number;
-    Edit(e: React.MouseEvent<HTMLElement>): void;
-    Delete(e: React.MouseEvent<HTMLElement>): void;
+    Edit?(e: React.MouseEvent<HTMLElement>): void;
+    Delete?(e: React.MouseEvent<HTMLElement>): void;
+    RegistrationApproval?(e: React.MouseEvent<HTMLElement>): void;
 };
 
-function MiniMap({ name, latitude, longitude, Edit, Delete }: MiniMapProps) {
+function MiniMap({ name, latitude, longitude, Edit, Delete, RegistrationApproval }: MiniMapProps) {
     return (
         <Container>
             <MapContainer>
@@ -49,12 +50,24 @@ function MiniMap({ name, latitude, longitude, Edit, Delete }: MiniMapProps) {
                 <OrphanageName>{name}</OrphanageName>
 
                 <ButtonWrapper>
-                    <Button type="button" onClick={Edit}>
-                        <FiEdit3 size={24} color="#12AFCB" />
-                    </Button>
-                    <Button type="button" onClick={Delete}>
-                        <FiTrash size={24} color="#12AFCB" />
-                    </Button>
+                    {RegistrationApproval ?
+                        (
+                            <Button type="button" onClick={RegistrationApproval}>
+                                <FiArrowRight size={24} color="#12AFCB" />
+                            </Button>
+                        )
+                        :
+                        (
+                            <>
+                                <Button type="button" onClick={Edit}>
+                                    <FiEdit3 size={24} color="#12AFCB" />
+                                </Button>
+                                <Button type="button" onClick={Delete}>
+                                    <FiTrash size={24} color="#12AFCB" />
+                                </Button>
+                            </>
+                        )
+                    }
                 </ButtonWrapper>
 
             </Info>
