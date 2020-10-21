@@ -43,7 +43,7 @@ function Signin() {
         e.preventDefault();
 
         login({ email, password }, remember).then(response => {
-            const { user: { id, name, email }, token, error } = response;
+            const { user, token, error } = response;
 
             if (error) {
                 setEmail('');
@@ -51,6 +51,8 @@ function Signin() {
                 setErrorMessage(error);
                 return;
             };
+
+            const { id, name, email } = user
 
             // if (setUser) {
             //     setUser(userData);
