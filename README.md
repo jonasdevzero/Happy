@@ -89,6 +89,6 @@ $ yarn dev
 - typeorm
 - MVC design pattern
 
-
+<h2 align="center">Happy 2.0 comming soon</h2>
 
 
