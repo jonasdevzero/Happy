@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
 
 export const Container = styled.div`
     display:  flex;
@@ -23,19 +23,23 @@ export const FixedContainer = styled.div`
 
 export const Header = styled.header``;
 
-export const Icon = styled.button`
+interface IconProps {
+    isActive: boolean;
+}
+
+export const Icon: StyledComponent<"button", any, { isActive: boolean }, never> = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 4.8rem;
     height: 4.8rem;
     border-radius: 1.6rem;
-    background-color: ${({ isActive }: any) => isActive ? '' : '#12AFCB'};
+    background-color: ${({ isActive }: IconProps) => isActive ? '#FFD666' : '#12AFCB'};
     border: none;
     cursor: pointer;
 
     svg {
-        color: #fff;
+        color: ${({ isActive }: IconProps) => isActive ? '#12AFCB' : '#fff'};
     };
 
     &:hover {

@@ -24,7 +24,14 @@ interface ButtonProps {
     children: React.ReactNode;
     type?: 'button' | 'submit';
     onClick(e: React.MouseEvent<HTMLElement>): void;
-    isActive?: boolean | false;
+    isActive?: true | false;
+}
+
+interface IconProps {
+    children: React.ReactNode;
+    type?: 'button' | 'submit';
+    onClick(e: React.MouseEvent<HTMLElement>): void;
+    isActive: true | false;
 }
 
 function Sidebar({ children }: SidebarChildren) {
@@ -47,8 +54,8 @@ Sidebar.GroupIcon = function SidebarGroupIcon({ children }: SidebarChildren) {
     return <GroupIcon>{children}</GroupIcon>
 }
 
-Sidebar.Icon = function SidebarIcon({ children, onClick, type, isActive }: ButtonProps) {
-    return <Icon {...isActive} onClick={onClick} type={type}>{children}</Icon>
+Sidebar.Icon = function SidebarIcon({ children, onClick, type, isActive }: IconProps) {
+    return <Icon isActive={isActive} onClick={onClick} type={type}>{children}</Icon>
 };
 
 Sidebar.Title = function SidebarTitle({ children }: SidebarChildren) {
