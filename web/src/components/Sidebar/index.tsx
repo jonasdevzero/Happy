@@ -4,6 +4,8 @@ import {
     Container,
     FixedContainer,
     Header,
+    Icon,
+    GroupIcon,
     Logo,
     Title,
     SubTitle,
@@ -15,7 +17,8 @@ import {
 import logo from '../../images/map-marker.svg';
 
 interface SidebarChildren {
-    children: React.ReactNode,
+    children: React.ReactNode;
+    isActive?: boolean | false;
 };
 
 interface ButtonProps {
@@ -38,6 +41,14 @@ Sidebar.Header = function SidebarHeader({ children }: SidebarChildren) {
 
 Sidebar.Logo = function SidebarLogo() {
     return <Logo src={logo} alt="Happy" /> // Static
+};
+
+Sidebar.GroupIcon = function SidebarGroupIcon({ children }: SidebarChildren) {
+    return <GroupIcon>{children}</GroupIcon>
+}
+
+Sidebar.Icon = function SidebarIcon({ children, isActive }: SidebarChildren) {
+    return <Icon {...isActive}>{children}</Icon>
 };
 
 Sidebar.Title = function SidebarTitle({ children }: SidebarChildren) {

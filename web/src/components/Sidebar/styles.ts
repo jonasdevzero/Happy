@@ -23,6 +23,39 @@ export const FixedContainer = styled.div`
 
 export const Header = styled.header``;
 
+export const Icon = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.8rem;
+    height: 5.8rem;
+    border-radius: 1.6rem;
+    background-color: ${({ isActive }: any) => isActive ? '' : '#12AFCB'};
+    border: none;
+    cursor: pointer;
+
+    svg {
+        color: #fff;
+    };
+
+    &:hover {
+        background-color: #FFD666;
+
+        svg {
+            color: #12AFCB;
+        };
+    };
+
+    & + & {
+        margin-top: 1.5rem;
+    };
+`;
+
+export const GroupIcon = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 export const Logo = styled.img``;
 
 export const Title = styled.h2`

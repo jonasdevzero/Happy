@@ -6,7 +6,6 @@ import { useAuth } from './hooks/useAuth';
 
 function App() {
   const { user, setUser } = useAuth()
-  console.log(user);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
