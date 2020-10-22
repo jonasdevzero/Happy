@@ -30,9 +30,11 @@ export default {
         } = req.body;
         const usersRepository = getRepository(User);
 
-        const existsUser = await usersRepository.find({ email });
-        if (existsUser)
+        const existsUser = await usersRepository.findOne({ email });
+
+        if (existsUser) {
             return res.status(400).json({ error: 'user already exists' });
+        }
 
         const data = {
             name,
