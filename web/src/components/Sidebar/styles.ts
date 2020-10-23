@@ -19,6 +19,7 @@ export const FixedContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    top: 0;
 `;
 
 export const Header = styled.header``;
@@ -36,6 +37,7 @@ export const Icon: StyledComponent<"button", any, { isActive: boolean }, never> 
     border-radius: 1.6rem;
     background-color: ${({ isActive }: IconProps) => isActive ? '#FFD666' : '#12AFCB'};
     border: none;
+    outline: none;
     cursor: pointer;
 
     svg {

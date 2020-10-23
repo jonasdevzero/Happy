@@ -22,8 +22,8 @@ function OrphanagesMap() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
     useEffect(() => {
-        api.get('/orphanages').then(resp => {
-            setOrphanages(resp.data);
+        api.post('/orphanages/filtered', { filter: 'approved' }).then(resp => {
+            setOrphanages(resp.data.orphanagesApproved);
         });
     }, []);
 
