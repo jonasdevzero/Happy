@@ -11,22 +11,8 @@ import { MapIcon } from '../../utils/MapIcon';
 import {
   Container,
   Inner,
-  Form,
-  Fieldset,
-  Legend,
-  InputWrapper,
-  Label,
-  Span,
-  Input,
-  TextArea,
-  NewImagesContainer,
-  NewImageLabel,
-  NewImageInput,
-  Select,
-  ButtonSelect,
-  Submit,
 } from './styles';
-import { Sidebar } from '../../components';
+import { Sidebar, Form } from '../../components';
 
 export default function CreateOrphanage() {
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
@@ -35,6 +21,7 @@ export default function CreateOrphanage() {
 
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
+  const [contact, setContact] = useState('');
   const [instructions, setInstructions] = useState('');
   const [openning_hours, setOpenningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
@@ -67,14 +54,15 @@ export default function CreateOrphanage() {
     const data = new FormData();
     data.append('name', name);
     data.append('about', about);
+    data.append('contact', contact);
     data.append('instructions', instructions);
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
     data.append('openning_hours', openning_hours);
     data.append('open_on_weekends', String(open_on_weekends));
-    
+
     images.forEach(image => {
-      data.append('images',image);
+      data.append('images', image);
     });
 
     await api.post('orphanages', data)
@@ -97,8 +85,8 @@ export default function CreateOrphanage() {
 
       <Inner>
         <Form onSubmit={handleSubmit}>
-          <Fieldset>
-            <Legend>Dados</Legend>
+          <Form.Fieldset>
+            <Form.Legend>Dados</Form.Legend>
 
             <Map
               center={[-6.4847599, -35.4281936]}
@@ -117,65 +105,82 @@ export default function CreateOrphanage() {
               }
             </Map>
 
-            <InputWrapper>
-              <Label htmlFor="name">Nome</Label>
-              <Input id="name" value={name} onChange={e => setName(e.target.value)} />
-            </InputWrapper>
+            <Form.InputWrapper>
+              <Form.Label htmlFor="name">Nome</Form.Label>
+              <Form.Input id="name" value={name} onChange={e => setName(e.target.value)} />
+            </Form.InputWrapper>
 
-            <InputWrapper>
-              <Label htmlFor="about">
+            <Form.InputWrapper>
+              <Form.Label htmlFor="about">
                 Sobre
-                <Span>Máximo de 300 caracteres</Span>
-              </Label>
-              <TextArea id="name" maxLength={300} value={about} onChange={e => setAbout(e.target.value)} />
-            </InputWrapper>
+                <Form.Span>Máximo de 300 caracteres</Form.Span>
+              </Form.Label>
+              <Form.TextArea id="name" maxLength={300} value={about} onChange={e => setAbout(e.target.value)} />
+            </Form.InputWrapper>
 
-            <InputWrapper>
-              <Label htmlFor="images">Fotos</Label>
+            <Form.InputWrapper>
+              <Form.Label htmlFor="contact">Número de whatsapp</Form.Label>
+              <Form.Input id="contact" value={contact} onChange={e => setContact(e.target.value)} />
+            </Form.InputWrapper>
 
-              <NewImagesContainer className="uploaded-image">
+            <Form.InputWrapper>
+              <Form.Label htmlFor="images">Fotos</Form.Label>
+
+              <Form.ImagesWrapper>
                 {imagesPreview.map(image => {
                   return (
-                    <img key={image} src={image} alt={name}/>
+                    <img key={image} src={image} alt={name} />
                   )
                 })}
 
-                <NewImageLabel htmlFor="image[]">
+                <Form.ImageLabel htmlFor="image[]">
                   <FiPlus size={24} color="#15b6d6" />
-                </NewImageLabel>
+                </Form.ImageLabel>
 
-                <NewImageInput multiple onChange={handleSelectImages} type="file" id="image[]" />
-              </NewImagesContainer>
-            </InputWrapper>
-          </Fieldset>
+                <Form.ImageInput multiple onChange={handleSelectImages} type="file" id="image[]" />
+              </Form.ImagesWrapper>
+            </Form.InputWrapper>
+          </Form.Fieldset>
 
-          <Fieldset>
-            <Legend>Visitação</Legend>
+          <Form.Fieldset>
+            <Form.Legend>Visitação</Form.Legend>
 
-            <InputWrapper>
-              <Label htmlFor="instructions">Instruções</Label>
-              <TextArea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
-            </InputWrapper>
+            <Form.InputWrapper>
+              <Form.Label htmlFor="instructions">Instruções</Form.Label>
+              <Form.TextArea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
+            </Form.InputWrapper>
 
-            <InputWrapper>
-              <Label htmlFor="opening_hours">Horário de funcionamento</Label>
-              <Input id="opening_hours" value={openning_hours} onChange={e => setOpenningHours(e.target.value)} />
-            </InputWrapper>
+            <Form.InputWrapper>
+              <Form.Label htmlFor="opening_hours">Horário de funcionamento</Form.Label>
+              <Form.Input id="opening_hours" value={openning_hours} onChange={e => setOpenningHours(e.target.value)} />
+            </Form.InputWrapper>
 
-            <InputWrapper>
-              <Label htmlFor="open_on_weekends">Atende fim de semana</Label>
+            <Form.InputWrapper>
+              <Form.Label htmlFor="open_on_weekends">Atende fim de semana</Form.Label>
 
-              <Select>
-                <ButtonSelect type="button" className={open_on_weekends ? 'active' : ''} onClick={_ => setOpenOnWeekends(true)}>Sim</ButtonSelect>
-                <ButtonSelect type="button" className={open_on_weekends ? '' : 'active'} onClick={_ => setOpenOnWeekends(false)}>Não</ButtonSelect>
-              </Select>
-            </InputWrapper>
+              <Form.SelectWrapper>
+                <Form.Select
+                  type="button"
+                  className={open_on_weekends ? 'active' : ''}
+                  onClick={_ => setOpenOnWeekends(true)}
+                >
+                  Sim
+                </Form.Select>
+                <Form.Select
+                  type="button"
+                  className={open_on_weekends ? '' : 'active'}
+                  onClick={_ => setOpenOnWeekends(false)}
+                >
+                  Não
+                </Form.Select>
+              </Form.SelectWrapper>
+            </Form.InputWrapper>
 
-          </Fieldset>
+          </Form.Fieldset>
 
-          <Submit type="submit">
+          <Form.Submit type="submit">
             Confirmar
-          </Submit>
+          </Form.Submit>
 
         </Form>
 
