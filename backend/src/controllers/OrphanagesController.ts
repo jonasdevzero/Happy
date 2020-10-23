@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import Orphanage from '../models/Orphanage';
+import Image from '../models/Image';
 import OrphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
@@ -102,16 +103,52 @@ export default {
     },
 
     async update(req: Request, res: Response) {
-        const id = req.body.id;
+        const { id } = req.params;
+        const {
+            name,
+            latitude,
+            longitude,
+            about,
+            instructions,
+            openning_hours,
+            open_on_weekends,
+            contact,
+        } = req.body;
 
         try {
             const orphanagesRepository = getRepository(Orphanage);
+            const imagesRepository = getRepository(Image);
 
-            const orphanageUpdated = await orphanagesRepository.update(id, req.body);
+            const requestImages = req.files as Express.Multer.File[];
+            const images = requestImages.map(image => {
+                return {
+                    path: image.filename,
+                    orphanage: {
+                        id: id_number,
+                    }
+                }
+            })
+
+            if (images.length) {
+                await imagesRepository.delete({ orphanage: { id: Number(id) } });
+                const newImages = await imagesRepository.create(images)
+                await imagesRepository.save(newImages);
+            };
+
+            const orphanageUpdated = await orphanagesRepository.update(id, {
+                name,
+                latitude,
+                longitude,
+                about,
+                instructions,
+                openning_hours,
+                open_on_weekends,
+                contact,
+            });
 
             return res.status(200).json({ orphanageUpdated });
         } catch (err) {
-            return res.status(500).json({ error: 'error on server' });
+            return res.status(500).json({ err });
         }
     },
 
@@ -143,7 +180,7 @@ export default {
             switch (filter) {
                 case 'approved':
                     const orphanagesApproved = orphanages.filter(orphanage => orphanage.approved === true ? orphanage : null);
-                    return res.status(200).json({ orphanagesApproved });                  
+                    return res.status(200).json({ orphanagesApproved });
             };
         } catch (err) {
             return res.status(500).json({ error: 'Internal error server' });
