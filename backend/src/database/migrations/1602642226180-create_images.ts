@@ -31,8 +31,8 @@ export class createImages1602642226180 implements MigrationInterface {
                     referencedColumnNames: ['id'],
                     onUpdate: 'CASCADE',
                     onDelete: 'CASCADE'
-                }
-            ]
+                },
+            ],
         }))
     }
 
