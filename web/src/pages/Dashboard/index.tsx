@@ -18,6 +18,7 @@ import { UserContext } from '../../contexts/UserContext';
 
 import api from '../../services/api';
 import { AxiosRequestConfig } from 'axios';
+import Orphanage from '../Orphanage';
 
 interface Orphanage {
     id: number;
@@ -27,29 +28,38 @@ interface Orphanage {
 };
 
 function Dashboard() {
-    const { setUser } = useContext(UserContext);
     const [orphanagesContainer, setOrphanagesContainer] = useState(0); // 0 -> registered orphanages, 1 -> pending entries
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+    const [orphanagesNotApproved, setOrphanagesNotApproved] = useState<Orphanage[]>([]);
 
+    const { setUser } = useContext(UserContext);
     const history = useHistory()
 
-
     useEffect(() => {
-        api.get('orphanages')
+        api.post('/orphanages/filtered', { filter: 'approved' })
             .then(response => {
-                setOrphanages(response.data);
+                setOrphanages(response.data.orphanagesApproved);
             });
     }, [orphanages]);
 
-    function editOrphanage(id: number) {
-        history.push(`/orphanage/edit/${id}`)
+    useEffect(() => {
+        api.post('/orphanages/filtered', { filter: 'notApproved' })
+            .then(response => {
+                setOrphanagesNotApproved(response.data.orphanagesNotApproved);
+            });
+    }, [orphanagesNotApproved])
+
+    function EditOrphanage(id: number) {
+        history.push(`/orphanages/edit/${id}`);
     };
 
     async function deleteOrphanage(id: number) {
         await api.delete('/orphanage', { id } as AxiosRequestConfig);
     };
 
-
+    function ApproveOrphanage(id: number) {
+        history.push(`/orphanages/approve/${id}`)
+    }
 
     function switchContainer() {
         if (orphanagesContainer === 0) {
@@ -61,8 +71,8 @@ function Dashboard() {
     };
 
     function logout() {
-        localStorage.removeItem('token');
         setUser!(undefined);
+        localStorage.removeItem('token');
         history.push('/');
     };
 
@@ -100,7 +110,7 @@ function Dashboard() {
                                         name={orphanage.name}
                                         latitude={orphanage.latitude}
                                         longitude={orphanage.longitude}
-                                        Edit={() => editOrphanage(orphanage.id)}
+                                        Edit={() => EditOrphanage(orphanage.id)}
                                         Delete={() => deleteOrphanage(orphanage.id)}
                                     />
                                 ))}
@@ -112,9 +122,18 @@ function Dashboard() {
                         <OrphanagesContainer>
                             <TitleContainer>
                                 <Title>Cadastros pendentes</Title>
+                                <OrphanagesTotal>{orphanagesNotApproved.length} orfanatos</OrphanagesTotal>
                             </TitleContainer>
                             <OrphanagesContent>
-                                {/* Use data */}
+                                {orphanagesNotApproved.map(orphanage => (
+                                    <MiniMap
+                                        key={orphanage.id}
+                                        name={orphanage.name}
+                                        latitude={orphanage.latitude}
+                                        longitude={orphanage.longitude}
+                                        RegistrationApproval={() => ApproveOrphanage(orphanage.id)}
+                                    />
+                                ))}
                             </OrphanagesContent>
                         </OrphanagesContainer>
                     )
