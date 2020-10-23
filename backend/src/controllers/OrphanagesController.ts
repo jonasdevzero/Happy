@@ -124,7 +124,7 @@ export default {
                 return {
                     path: image.filename,
                     orphanage: {
-                        id: id_number,
+                        id: Number(id),
                     }
                 }
             })
