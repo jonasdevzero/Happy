@@ -22,6 +22,17 @@ function generateToken(params: object) {
 };
 
 export default {
+    async index(req: Request, res: Response) {
+        const usersRepository = getRepository(User);
+
+        try {
+            const users = await usersRepository.find();
+            return res.send(UserView.renderMany(users));
+        } catch (err) {
+            return res.status(500).json({ error: 'Error on server' })
+        };
+    },
+
     async create(req: Request, res: Response) {
         const {
             name,
@@ -58,6 +69,18 @@ export default {
         return res.status(200).json({
             token: generateToken({ id: user.id }),
         })
+    },
+
+    async show(req: Request, res: Response) {
+        const { user: { id } } = req.body;
+        const usersRepository = getRepository(User);
+
+        try {
+            const user = await usersRepository.findOne({ id });
+            return res.status(200).json({ user: UserView.render(user as User) });
+        } catch (err) {
+            return res.status(500).json({ error: 'error on server' })
+        };
     },
 
     async login(req: Request, res: Response) {
@@ -97,17 +120,6 @@ export default {
         }
     },
 
-    async index(req: Request, res: Response) {
-        const usersRepository = getRepository(User);
-
-        try {
-            const users = await usersRepository.find();
-            return res.send(UserView.renderMany(users));
-        } catch (err) {
-            return res.status(500).json({ error: 'Error on server' })
-        };
-    },
-
     async delete(req: Request, res: Response) {
         const { id } = req.body;
         const usersRepository = getRepository(User);
@@ -119,16 +131,4 @@ export default {
             return res.status(500).json({ error: 'Error on server' })
         };
     },
-
-    async show(req: Request, res: Response) {
-        const { user: { id } } = req.body;
-        const usersRepository = getRepository(User);
-
-        try {
-            const user = await usersRepository.findOne({ id });
-            return res.status(200).json({ user: UserView.render(user as User) });
-        } catch (err) {
-            return res.status(500).json({ error: 'error on server' })
-        };
-    }
 };
