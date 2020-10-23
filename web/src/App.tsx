@@ -1,16 +1,9 @@
 import React from 'react';
-
 import Routes from './routes';
-import { UserContext } from './contexts/UserContext';
-import { useAuth } from './hooks/useAuth';
 
 function App() {
-  const { user, setUser } = useAuth()
-
   return (
-    <UserContext.Provider value={{ user, setUser }}>
       <Routes />
-    </UserContext.Provider>
   );
 };
 
