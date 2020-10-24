@@ -17,13 +17,9 @@ routes.put('/orphanages/:id', upload.array('images'), OrphanagesController.updat
 routes.delete('/orphanages/:id', OrphanagesController.delete);
 
 routes.get('/users', UsersController.index);
-routes.post('/user/create', UsersController.create);
-routes.post('/user/login', UsersController.login);
-routes.post('/user/auth', UsersController.auth, UsersController.show);
-routes.delete('/user', UsersController.delete);
-
-routes.post('/test/user', UsersController.auth, (req, res) => {
-    return res.send(req.body);
-})
+routes.post('/users/create', UsersController.create);
+routes.post('/users/login', UsersController.login);
+routes.post('/users/auth', UsersController.auth, UsersController.show);
+routes.delete('/users/:id', UsersController.delete);
 
 export default routes;
