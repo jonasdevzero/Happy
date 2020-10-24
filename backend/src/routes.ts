@@ -15,7 +15,7 @@ routes.get('/orphanages/:id', OrphanagesController.show);
 routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
 routes.put('/orphanages/:id', upload.array('images'), OrphanagesController.update);
 routes.post('/orphanages/filtered', OrphanagesController.filter);
-routes.delete('/orphanages', OrphanagesController.delete);
+routes.delete('/orphanages/:id', OrphanagesController.delete);
 
 routes.get('/users', UsersController.index);
 routes.post('/user/create', UsersController.create);

@@ -90,7 +90,7 @@ export default {
     },
 
     async delete(req: Request, res: Response) {
-        const { id } = req.body;
+        const { id } = req.params;
 
         try {
             const orphanagesRepository = getRepository(Orphanage);
@@ -113,6 +113,8 @@ export default {
             openning_hours,
             open_on_weekends,
             contact,
+            images_id,
+            approved,
         } = req.body;
 
         try {
@@ -121,17 +123,28 @@ export default {
 
             const requestImages = req.files as Express.Multer.File[];
             const images = requestImages.map(image => {
-                return {
+                return { 
                     path: image.filename,
                     orphanage: {
                         id: Number(id),
-                    }
-                }
-            })
+                    }, 
+                };
+            });
+
+            // the first value of imagesIdArray is ["", ...id's]
+            const imagesIdArray = images_id.split(' ');
+
+            if (imagesIdArray.length > 1) {
+                await imagesIdArray.forEach(async (id: string, i: number) => {
+                    if (i === 0) // -> ""
+                        return;
+
+                    await imagesRepository.delete(id)
+                });
+            };
 
             if (images.length) {
-                await imagesRepository.delete({ orphanage: { id: Number(id) } });
-                const newImages = await imagesRepository.create(images)
+                const newImages = await imagesRepository.create(images);
                 await imagesRepository.save(newImages);
             };
 
@@ -142,28 +155,15 @@ export default {
                 about,
                 instructions,
                 openning_hours,
-                open_on_weekends,
+                open_on_weekends: open_on_weekends === 'true',
                 contact,
+                approved: approved === 'true',
             });
 
             return res.status(200).json({ orphanageUpdated });
         } catch (err) {
             return res.status(500).json({ err });
         }
-    },
-
-    async approve(req: Request, res: Response) {
-        const { id } = req.body;
-
-        try {
-            const orphanagesRepository = getRepository(Orphanage);
-
-            const orphanageApproved = await orphanagesRepository.update(id, { approved: true });
-
-            return res.status(200).json({ orphanageApproved });
-        } catch (err) {
-            return res.status(500).json({ error: 'Internal server error' });
-        };
     },
 
     async filter(req: Request, res: Response) {
