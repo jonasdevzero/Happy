@@ -1,13 +1,6 @@
 import styled from 'styled-components/macro';
 
 export const Container = styled.form`
-    width: 70rem;
-    margin: 64px auto;
-
-    background: #FFFFFF;
-    border: .1rem solid #D3E2E5;
-    border-radius: 20px;
-
     padding: 6.4rem 8rem;
 
     overflow: hidden;
@@ -101,6 +94,7 @@ export const ImageWrapper = styled.div`
         height: 9.6rem;
         object-fit: cover;
         border-radius: 2rem;
+        border: solid .1rem #EBF2F5;
     };
 `;
 
@@ -122,8 +116,15 @@ export const ImageButton = styled.button`
     position: absolute;
     top: 0;
     right: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    border-radius: 0 2rem;
+    cursor: pointer;
 `;
 
 export const SelectWrapper = styled.div`
@@ -176,4 +177,40 @@ export const Submit = styled.button`
     svg {
         margin-right: 1.6rem;
     };
+`;
+
+export const ButtonWrapper = styled.div`
+    background-color: #F5F8FA;
+    border-radius: 0px 0px 20px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 7.5rem;
+`;
+
+export const Button = styled.button`
+    width: 26.4rem;
+    height: 6.4rem;
+    border-radius: 2rem;
+    border: none;
+    line-height: 2.8rem;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: #fff;
+    cursor: pointer;
+
+    background-color: #FF669D;
+    & + & {
+        background-color: #3CDC8C;
+    };
+`;
+
+export const FormWrapper = styled.div`
+    width: 70rem;
+    margin: 64px auto;
+
+    background: #FFFFFF;
+    border: .1rem solid #D3E2E5;
+    border-radius: 20px;
 `;

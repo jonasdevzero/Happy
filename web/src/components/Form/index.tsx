@@ -16,7 +16,10 @@ import {
     ImageButton,
     SelectWrapper,
     Select,
-    Submit
+    Submit,
+    ButtonWrapper,
+    Button,
+    FormWrapper
 } from './styles';
 
 interface FormProps {
@@ -42,7 +45,7 @@ interface InputProps {
     value?: string | number | readonly string[] | undefined;
     onChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     type?: 'file';
-    multiple?: boolean | undefined; 
+    multiple?: boolean | undefined;
 };
 
 interface ButtonProps {
@@ -156,5 +159,21 @@ Form.Submit = function FormSubmit({ children, type }: { children: React.ReactNod
         </Submit>
     )
 };
+
+Form.ButtonWrapper = function FormButtonWrapper({ children }: { children: React.ReactNode }) {
+    return <ButtonWrapper>{children}</ButtonWrapper>
+};
+
+Form.FormWrapper = function FormFormWrapper({ children }: { children: React.ReactNode }) {
+    return <FormWrapper>{children}</FormWrapper>
+};
+
+Form.Button = function FormButton({ children, onClick, type }: ButtonProps) {
+    return (
+        <Button onClick={onClick} type={type}>
+            {children}
+        </Button>
+    )
+}
 
 export default Form;
