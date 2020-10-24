@@ -15,8 +15,8 @@ export default {
             if (filter) {
                 let orphanages;
                 switch (filter) {
-                    case 'notApproved':
-                        orphanages =  await orphanagesRepository.find({ approved: false })
+                    case 'not_approved':
+                        orphanages = await orphanagesRepository.find({ approved: false })
                         return res.status(200).json({ orphanages });
                     case 'approved':
                         orphanages = await orphanagesRepository.find({ approved: true });
@@ -30,19 +30,26 @@ export default {
 
             return res.json(OrphanageView.renderMany(orphanages));
         } catch (err) {
+            console.log('[Error on index orphanages] -> ', err);
             return res.status(500).json({ error: 'Internal server error' });
         }
     },
 
     async show(req: Request, res: Response) {
-        const { id } = req.params
-        const orphanagesRepository = getRepository(Orphanage);
+        const { id } = req.params;
 
-        const orphanage = await orphanagesRepository.findOneOrFail(id, {
-            relations: ['images']
-        });
+        try {
+            const orphanagesRepository = getRepository(Orphanage);
 
-        return res.json(OrphanageView.render(orphanage));
+            const orphanage = await orphanagesRepository.findOneOrFail(id, {
+                relations: ['images']
+            });
+
+            return res.status(200).json({ orphanage: OrphanageView.render(orphanage) });
+        } catch (err) {
+            console.log('[Error on show orphanage] -> ', err);
+            return res.status(500).json({ error: 'Internal Server Error' })
+        };
     },
 
     async create(req: Request, res: Response) {
@@ -54,53 +61,59 @@ export default {
             instructions,
             openning_hours,
             open_on_weekends,
-            contact
+            contact,
         } = req.body;
 
-        const orphanagesRepository = getRepository(Orphanage);
+        try {
+            const orphanagesRepository = getRepository(Orphanage);
 
-        const requestImages = req.files as Express.Multer.File[];
-        const images = requestImages.map(image => {
-            return { path: image.filename }
-        })
+            // Getting images file
+            const requestImages = req.files as Express.Multer.File[];
+            const images = requestImages.map(image => {
+                return { path: image.filename }
+            });
 
-        const data = {
-            name,
-            latitude,
-            longitude,
-            about,
-            instructions,
-            openning_hours,
-            open_on_weekends: open_on_weekends === 'true',
-            contact,
-            approved: false,
-            images
-        };
+            const data = {
+                name,
+                latitude,
+                longitude,
+                about,
+                instructions,
+                openning_hours,
+                open_on_weekends: open_on_weekends === 'true',
+                contact,
+                approved: false, // When creating the value it will always be false.
+                images,
+            };
 
-        const schema = Yup.object().shape({
-            name: Yup.string().required(),
-            latitude: Yup.number().required(),
-            longitude: Yup.number().required(),
-            about: Yup.string().required().max(300),
-            instructions: Yup.string().required(),
-            openning_hours: Yup.string().required(),
-            open_on_weekends: Yup.boolean().required(),
-            contact: Yup.string(),
-            approved: Yup.boolean().required(),
-            images: Yup.array(Yup.object().shape({
-                path: Yup.string().required()
-            }))
-        });
+            // Validating the data
+            const schema = Yup.object().shape({
+                name: Yup.string().required(),
+                latitude: Yup.number().required(),
+                longitude: Yup.number().required(),
+                about: Yup.string().required().max(300),
+                instructions: Yup.string().required(),
+                openning_hours: Yup.string().required(),
+                open_on_weekends: Yup.boolean().required(),
+                contact: Yup.string().required(),
+                approved: Yup.boolean().required(),
+                images: Yup.array(Yup.object().shape({
+                    path: Yup.string().required()
+                })),
+            });
+            await schema.validate(data, {
+                abortEarly: false,
+            });
 
-        await schema.validate(data, {
-            abortEarly: false,
-        });
+            // Creating, saving and sending the orphanage.
+            const orphanage = orphanagesRepository.create(data);
+            await orphanagesRepository.save(orphanage);
 
-        const orphanage = orphanagesRepository.create(data);
-
-        await orphanagesRepository.save(orphanage);
-
-        res.json({ orphanage })
+            return res.status(200).json({ orphanage: OrphanageView.render(orphanage) });
+        } catch (err) {
+            console.log('[Error on create orphanage] -> ', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
     },
 
     async delete(req: Request, res: Response) {
@@ -108,11 +121,16 @@ export default {
 
         try {
             const orphanagesRepository = getRepository(Orphanage);
+            const imagesRepository = getRepository(Image);
 
-            const orphanageDeleted = await orphanagesRepository.delete(id);
-            return res.status(200).json({ orphanageDeleted });
+            // Deleting images related to the orphanage and deleting the orphanage.
+            await imagesRepository.delete({ orphanage: { id: Number(id) } });
+            await orphanagesRepository.delete(id);
+
+            return res.status(200);
         } catch (err) {
-            return res.status(500).json({ error: 'error on server' });
+            console.log('[Error on delete orphanage] -> ', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
         };
     },
 
@@ -137,32 +155,34 @@ export default {
 
             const requestImages = req.files as Express.Multer.File[];
             const images = requestImages.map(image => {
+                // defining the images with the relation of your orphanage -> orphanage_id. To save correctly.
                 return { 
                     path: image.filename,
                     orphanage: {
                         id: Number(id),
-                    }, 
+                    },
                 };
             });
 
-            // the first value of imagesIdArray is ["", ...id's]
+            // values of imagesIdArray is ["", ...id].
             const imagesIdArray = images_id.split(' ');
 
+            // Excluding images required to delete.
             if (imagesIdArray.length > 1) {
-                await imagesIdArray.forEach(async (id: string, i: number) => {
-                    if (i === 0) // -> ""
-                        return;
-
-                    await imagesRepository.delete(id)
+                imagesIdArray.forEach(async (id: string, i: number) => {
+                    if (i !== 0) { // 0 === [""]
+                        await imagesRepository.delete(id);
+                    };                     
                 });
             };
 
-            if (images.length) {
+            // Adding the new images.
+            if (images.length) { 
                 const newImages = await imagesRepository.create(images);
                 await imagesRepository.save(newImages);
             };
 
-            const orphanageUpdated = await orphanagesRepository.update(id, {
+            const orphanage = await orphanagesRepository.update(id, {
                 name,
                 latitude,
                 longitude,
@@ -174,9 +194,10 @@ export default {
                 approved: approved === 'true',
             });
 
-            return res.status(200).json({ orphanageUpdated });
+            return res.status(200).json({ orphanage });
         } catch (err) {
-            return res.status(500).json({ err });
+            console.log('[Error on update orphanage] -> ', err)
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
     },
 };
