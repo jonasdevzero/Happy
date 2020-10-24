@@ -1,14 +1,20 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import api from '../../services/api';
 
 import { Map, Marker, TileLayer } from 'react-leaflet';
-// import { LeafletMouseEvent } from 'leaflet';
 
 import { FiArrowLeft, FiPlus, FiX } from "react-icons/fi";
 import { MapIcon } from '../../utils/MapIcon';
+import created from '../../images/created.svg';
 
 import {
+  ConfirmButton,
+  ConfirmContainer,
+  ConfirmImage,
+  ConfirmInfo,
+  ConfirmSubtitle,
+  ConfirmTitle,
   Container,
   Inner,
 } from './styles';
@@ -27,6 +33,14 @@ export default function CreateOrphanage() {
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [images, setImages] = useState<File[]>([]);
   const [imagesPreview, setImagesPreview] = useState<string[]>([]);
+
+  const [confirm, setConfirm] = useState(false);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      setPosition({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+    });
+  }, [])
 
   function handleMapClick(e: any) {
     const { lat, lng } = e.latlng;
@@ -75,134 +89,156 @@ export default function CreateOrphanage() {
 
     await api.post('orphanages', data)
       .then(resp => {
-        history.push('/app');
+        setConfirm(true)
       });
   };
 
+  function goToMap() {
+    history.push('/app')
+  }
+
   return (
-    <Container>
-      <Sidebar.FixedContainer>
-        <Sidebar.Logo />
+    confirm ?
+      (
+        <ConfirmContainer>
 
-        <Sidebar.Footer>
-          <Sidebar.Button type={'button'} onClick={goBack}>
-            <FiArrowLeft size={24} color="#FFF" />
-          </Sidebar.Button>
-        </Sidebar.Footer>
-      </Sidebar.FixedContainer>
+          <ConfirmInfo>
+            <ConfirmTitle>Ebaaa!</ConfirmTitle>
+            <ConfirmSubtitle>
+              O cadastro deu certo e foi enviado ao administrador para ser aprovado. Agora é só esperar :)
+            </ConfirmSubtitle>
+            <ConfirmButton onClick={goToMap}>Voltar para o mapa</ConfirmButton>
+          </ConfirmInfo>
 
-      <Inner>
-        <Form.FormWrapper>
-          <Form onSubmit={handleSubmit}>
-            <Form.Fieldset>
-              <Form.Legend>Dados</Form.Legend>
+          <ConfirmImage src={created} alt='confirmed' />
+        </ConfirmContainer>
+      )
+      :
+      (
+        <Container>
+          <Sidebar.FixedContainer>
+            <Sidebar.Logo />
 
-              <Map
-                center={[-6.4847599, -35.4281936]}
-                style={{ width: '100%', height: 280 }}
-                zoom={15}
-                onclick={handleMapClick}
-              >
-                <TileLayer
-                  url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                />
+            <Sidebar.Footer>
+              <Sidebar.Button type={'button'} onClick={goBack}>
+                <FiArrowLeft size={24} color="#FFF" />
+              </Sidebar.Button>
+            </Sidebar.Footer>
+          </Sidebar.FixedContainer>
 
-                {position.latitude === 0 ?
-                  null
-                  :
-                  <Marker interactive={false} icon={MapIcon} position={[position.latitude, position.longitude]} />
-                }
-              </Map>
+          <Inner>
+            <Form.FormWrapper>
+              <Form onSubmit={handleSubmit}>
+                <Form.Fieldset>
+                  <Form.Legend>Dados</Form.Legend>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="name">Nome</Form.Label>
-                <Form.Input id="name" value={name} onChange={e => setName(e.target.value)} />
-              </Form.InputWrapper>
+                  <Map
+                    center={position.latitude !== 0 ? [position.latitude, position.longitude] : [-6.4847599, -35.4281936]}
+                    style={{ width: '100%', height: 280 }}
+                    zoom={15}
+                    onclick={handleMapClick}
+                  >
+                    <TileLayer
+                      url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                    />
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="about">
-                  Sobre
+                    {position.latitude === 0 ?
+                      null
+                      :
+                      <Marker interactive={false} icon={MapIcon} position={[position.latitude, position.longitude]} />
+                    }
+                  </Map>
+
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="name">Nome</Form.Label>
+                    <Form.Input id="name" value={name} onChange={e => setName(e.target.value)} />
+                  </Form.InputWrapper>
+
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="about">
+                      Sobre
                 <Form.Span>Máximo de 300 caracteres</Form.Span>
-                </Form.Label>
-                <Form.TextArea id="name" maxLength={300} value={about} onChange={e => setAbout(e.target.value)} />
-              </Form.InputWrapper>
+                    </Form.Label>
+                    <Form.TextArea id="name" maxLength={300} value={about} onChange={e => setAbout(e.target.value)} />
+                  </Form.InputWrapper>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="contact">Número de whatsapp</Form.Label>
-                <Form.Input id="contact" value={contact} onChange={e => setContact(e.target.value)} />
-              </Form.InputWrapper>
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="contact">Número de whatsapp</Form.Label>
+                    <Form.Input id="contact" value={contact} onChange={e => setContact(e.target.value)} />
+                  </Form.InputWrapper>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="images">Fotos</Form.Label>
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="images">Fotos</Form.Label>
 
-                <Form.ImagesWrapper>
-                  {imagesPreview.map((image, i) => {
-                    return (
-                      <div key={image}>
-                        <Form.ImageWrapper >
-                          <Form.ImageButton type='button' onClick={() => handleRemoveImage(i)}>
-                            <FiX size={24} color='#FF669D' />
-                          </Form.ImageButton>
-                          <img src={image} alt={image} />
-                        </Form.ImageWrapper>
-                      </div>
-                    )
-                  })}
+                    <Form.ImagesWrapper>
+                      {imagesPreview.map((image, i) => {
+                        return (
+                          <div key={image}>
+                            <Form.ImageWrapper >
+                              <Form.ImageButton type='button' onClick={() => handleRemoveImage(i)}>
+                                <FiX size={24} color='#FF669D' />
+                              </Form.ImageButton>
+                              <img src={image} alt={image} />
+                            </Form.ImageWrapper>
+                          </div>
+                        )
+                      })}
 
-                  <Form.ImageLabel htmlFor="image[]">
-                    <FiPlus size={24} color="#15b6d6" />
-                  </Form.ImageLabel>
+                      <Form.ImageLabel htmlFor="image[]">
+                        <FiPlus size={24} color="#15b6d6" />
+                      </Form.ImageLabel>
 
-                  <Form.ImageInput multiple onChange={handleSelectImages} type="file" id="image[]" />
-                </Form.ImagesWrapper>
-              </Form.InputWrapper>
-            </Form.Fieldset>
+                      <Form.ImageInput multiple onChange={handleSelectImages} type="file" id="image[]" />
+                    </Form.ImagesWrapper>
+                  </Form.InputWrapper>
+                </Form.Fieldset>
 
-            <Form.Fieldset>
-              <Form.Legend>Visitação</Form.Legend>
+                <Form.Fieldset>
+                  <Form.Legend>Visitação</Form.Legend>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="instructions">Instruções</Form.Label>
-                <Form.TextArea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
-              </Form.InputWrapper>
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="instructions">Instruções</Form.Label>
+                    <Form.TextArea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
+                  </Form.InputWrapper>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="opening_hours">Horário de funcionamento</Form.Label>
-                <Form.Input id="opening_hours" value={openning_hours} onChange={e => setOpenningHours(e.target.value)} />
-              </Form.InputWrapper>
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="opening_hours">Horário de funcionamento</Form.Label>
+                    <Form.Input id="opening_hours" value={openning_hours} onChange={e => setOpenningHours(e.target.value)} />
+                  </Form.InputWrapper>
 
-              <Form.InputWrapper>
-                <Form.Label htmlFor="open_on_weekends">Atende fim de semana</Form.Label>
+                  <Form.InputWrapper>
+                    <Form.Label htmlFor="open_on_weekends">Atende fim de semana</Form.Label>
 
-                <Form.SelectWrapper>
-                  <Form.Select
-                    type="button"
-                    className={open_on_weekends ? 'active' : ''}
-                    onClick={_ => setOpenOnWeekends(true)}
-                  >
-                    Sim
+                    <Form.SelectWrapper>
+                      <Form.Select
+                        type="button"
+                        className={open_on_weekends ? 'active' : ''}
+                        onClick={_ => setOpenOnWeekends(true)}
+                      >
+                        Sim
                 </Form.Select>
-                  <Form.Select
-                    type="button"
-                    className={open_on_weekends ? '' : 'active'}
-                    onClick={_ => setOpenOnWeekends(false)}
-                  >
-                    Não
+                      <Form.Select
+                        type="button"
+                        className={open_on_weekends ? '' : 'active'}
+                        onClick={_ => setOpenOnWeekends(false)}
+                      >
+                        Não
                 </Form.Select>
-                </Form.SelectWrapper>
-              </Form.InputWrapper>
+                    </Form.SelectWrapper>
+                  </Form.InputWrapper>
 
-            </Form.Fieldset>
+                </Form.Fieldset>
 
-            <Form.Submit type="submit">
-              Confirmar
+                <Form.Submit type="submit">
+                  Confirmar
           </Form.Submit>
 
-          </Form>
-        </Form.FormWrapper>
+              </Form>
+            </Form.FormWrapper>
 
-      </Inner>
-    </Container>
+          </Inner>
+        </Container>
+      )
   );
 }
 
