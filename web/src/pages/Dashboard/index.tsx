@@ -47,15 +47,14 @@ function Dashboard() {
     const [deletedContainer, setDeletedContainer] = useState(false);
 
     useEffect(() => {
-        api.get('/orphanages')
-            .then(response => {
-                const approved = response.data.filter((orphanage: { approved: boolean; }) => orphanage.approved ? orphanage : null);
-                const notApproved = response.data.filter((orphanage: { approved: boolean; }) => orphanage.approved ? null : orphanage);
+        api.get('/orphanages?filter=approved')
+            .then(response => { setOrphanages(response.data.orphanages) });
+    }, []);
 
-                setOrphanages(approved);
-                setOrphanagesNotApproved(notApproved);
-            });
-    }, [orphanages]);
+    useEffect(() => {
+        api.get('/orphanages?filter=notApproved')
+            .then(response => { setOrphanagesNotApproved(response.data.orphanages); })
+    }, [])
 
     function EditOrphanage(id: number) {
         history.push(`/orphanages/edit/${id}`);
