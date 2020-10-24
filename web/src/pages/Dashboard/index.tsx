@@ -52,7 +52,7 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        api.get('/orphanages?filter=notApproved')
+        api.get('/orphanages?filter=not_approved')
             .then(response => { setOrphanagesNotApproved(response.data.orphanages); })
     }, [])
 
