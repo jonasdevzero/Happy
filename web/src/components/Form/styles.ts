@@ -159,6 +159,12 @@ export const Select = styled.button`
         border: .1rem solid #A1E9C5;
         color: #37C77F;
     };
+
+    & + &.active {
+        background-color: #FDF0F5;
+        border: .1rem solid #FFBCD4;
+        color: #FF669D;
+    };
 `;
 
 export const Submit = styled.button`
