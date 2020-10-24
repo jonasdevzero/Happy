@@ -7,8 +7,22 @@ import * as Yup from 'yup';
 
 export default {
     async index(req: Request, res: Response) {
+        const { filter } = req.query;
+
         try {
             const orphanagesRepository = getRepository(Orphanage);
+
+            if (filter) {
+                let orphanages;
+                switch (filter) {
+                    case 'notApproved':
+                        orphanages =  await orphanagesRepository.find({ approved: false })
+                        return res.status(200).json({ orphanages });
+                    case 'approved':
+                        orphanages = await orphanagesRepository.find({ approved: true });
+                        return res.status(200).json({ orphanages });
+                }
+            }
 
             const orphanages = await orphanagesRepository.find({
                 relations: ['images']
@@ -165,25 +179,4 @@ export default {
             return res.status(500).json({ err });
         }
     },
-
-    async filter(req: Request, res: Response) {
-        const { filter } = req.body;
-
-
-        try {
-            const orphanagesRepository = getRepository(Orphanage);
-
-            const orphanages = await orphanagesRepository.find({
-                relations: ['images']
-            });
-
-            switch (filter) {
-                case 'approved':
-                    const orphanagesApproved = orphanages.filter(orphanage => orphanage.approved === true ? orphanage : null);
-                    return res.status(200).json({ orphanagesApproved });
-            };
-        } catch (err) {
-            return res.status(500).json({ error: 'Internal error server' });
-        }
-    }
 };
