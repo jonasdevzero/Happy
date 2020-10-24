@@ -3,8 +3,8 @@ import styled from 'styled-components/macro';
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    width: 54.4rem;
-    height: 30.1rem;
+    max-width: 54.4rem;
+    flex: 1;
     background-color: #fff;
     border: 1px solid #DDE3F0;
     border-radius: 2rem;
@@ -22,6 +22,7 @@ export const Info = styled.div`
     justify-content: space-between;
     align-items: center;
     flex: 1;
+    padding: 1rem;
 `;
 
 export const OrphanageName = styled.h2`
