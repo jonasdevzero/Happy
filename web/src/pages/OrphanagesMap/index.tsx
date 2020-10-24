@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+
+import { Sidebar } from '../../components';
 
 import {
     MapStyle,
     Container,
     Link
 } from './styles';
-import { Sidebar } from '../../components';
 import { FiPlus, FiArrowRight } from 'react-icons/fi';
 import { MapIconMarker } from '../../utils/MapIcon';
+
+import api from '../../services/api';
 
 interface Orphanage {
     id: number,

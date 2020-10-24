@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { MiniMap, Sidebar } from '../../components';
+import { MiniMap, Sidebar } from '../../../components';
 
 import {
     Container,
@@ -22,12 +22,12 @@ import {
     DeletedImage,
 } from './styles';
 import { FiMapPin, FiPower, FiAlertCircle } from 'react-icons/fi';
-import notFound from '../../images/not-found.svg';
-import Deleted from '../../images/deleted.svg';
+import notFound from '../../../images/icons/not-found.svg';
+import Deleted from '../../../images/icons/deleted.svg';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../../contexts/UserContext';
 
-import api from '../../services/api';
+import api from '../../../services/api';
 
 interface Orphanage {
     id: number;
@@ -63,6 +63,9 @@ function Dashboard() {
     async function deleteOrphanage(id: number) {
         await api.delete(`/orphanages/${id}`);
         setDeletedContainer(true);
+
+        const currentOrphanages = orphanages.filter(orphanage => orphanage.id !== id ? orphanage : null);
+        setOrphanages(currentOrphanages);
     };
 
     function ApproveOrphanage(id: number) {

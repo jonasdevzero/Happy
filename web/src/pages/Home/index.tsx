@@ -15,8 +15,8 @@ import {
     Link,
     AccessRestrict
 } from './styles';
-import logo from '../../images/logo.svg';
 import { FiArrowRight } from 'react-icons/fi';
+import logo from '../../images/icons/logo.svg';
 
 function Home() {
     return (

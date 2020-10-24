@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
-import landing from '../../images/landing.svg';
+import landing from '../../images/icons/landing.svg';
 
 export const Container = styled.div`
     display: flex;

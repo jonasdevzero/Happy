@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import api from '../../services/api';
-
 import { Map, Marker, TileLayer } from "react-leaflet";
+
+import { Sidebar } from '../../components';
 
 import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo, FiArrowLeft } from "react-icons/fi";
 import { MapIcon } from '../../utils/MapIcon';
 
-import { Sidebar } from '../../components';
+import api from '../../services/api';
+
 import {
   Container,
-  Inner,
+  Content,
   Details,
   Image,
   Images,
@@ -56,7 +57,7 @@ export default function Orphanage() {
   const { goBack } = useHistory();
 
   useEffect(() => {
-    api.get(`orphanages/${params.id}`)
+    api.get(`/orphanages/${params.id}`)
       .then(resp => {
         setOrphanage(resp.data.orphanage);
       });
@@ -74,9 +75,9 @@ export default function Orphanage() {
         </Sidebar.Footer>
       </Sidebar.FixedContainer>
 
-      <Inner>
+      <Content>
         <Details>
-          <Image src={orphanage?.images[currentImage].url} alt={orphanage?.name} />
+          <Image src={orphanage?.images[currentImage]?.url} alt={orphanage?.name} />
 
           <Images>
             {orphanage?.images.map((image, i) => (
@@ -158,7 +159,7 @@ export default function Orphanage() {
             </Contact>
           </DetailsContent>
         </Details>
-      </Inner>
+      </Content>
     </Container>
   );
 }

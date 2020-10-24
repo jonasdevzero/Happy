@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
+import api from '../../../services/api';
 
-import api from '../../services/api';
-
-import { Sidebar, Form } from '../../components';
+import { Sidebar, Form } from '../../../components';
 import {
     Container,
     Content
 } from './styles';
-import { FiArrowLeft, FiPlus, FiX, FiXCircle, FiCheck } from 'react-icons/fi';
-import { MapIcon } from '../../utils/MapIcon';
+import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi';
+import { MapIcon } from '../../../utils/MapIcon';
 
-function ApproveOrphanage() {
+function EditOrphanage() {
     const params = useParams<{ id: string }>();
     const { goBack } = useHistory();
 
@@ -42,7 +41,7 @@ function ApproveOrphanage() {
                     images,
                     latitude,
                     longitude,
-                } = response.data;
+                } = response.data.orphanage;
 
                 setName(name);
                 setAbout(about);
@@ -56,7 +55,9 @@ function ApproveOrphanage() {
             });
     }, [params.id]);
 
-    async function approveOrphanage() {
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+
         const { latitude, longitude } = position;
 
         const data = new FormData();
@@ -80,11 +81,6 @@ function ApproveOrphanage() {
                 goBack();
             });
     };
-
-    async function refuseOrphanage() {
-        await api.delete(`/orphanages/${params.id}`);
-        goBack()
-    }
 
     function handleMapClick(e: any) {
         const { lat, lng } = e.latlng;
@@ -130,7 +126,7 @@ function ApproveOrphanage() {
 
             <Content>
                 <Form.FormWrapper>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Fieldset>
                             <Form.Legend>Dados</Form.Legend>
 
@@ -232,22 +228,17 @@ function ApproveOrphanage() {
                             </Form.InputWrapper>
 
                         </Form.Fieldset>
+
+                        <Form.Submit type="submit">
+                            Confirmar
+                    </Form.Submit>
+
                     </Form>
-                    <Form.ButtonWrapper>
-                            <Form.Button onClick={refuseOrphanage}>
-                                <FiXCircle size={24} color="#fff" />
-                                Recusar
-                        </Form.Button>
-                            <Form.Button onClick={approveOrphanage}>
-                                <FiCheck size={24} color="#fff" />
-                                Aceitar
-                        </Form.Button>
-                        </Form.ButtonWrapper>
                 </Form.FormWrapper>
             </Content>
 
         </Container>
-    );
-};
+    )
+}
 
-export default ApproveOrphanage;
+export default EditOrphanage;

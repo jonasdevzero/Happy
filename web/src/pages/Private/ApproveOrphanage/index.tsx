@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import api from '../../services/api';
 
-import { Sidebar, Form } from '../../components';
+import api from '../../../services/api';
+
+import { Sidebar, Form } from '../../../components';
 import {
     Container,
     Content
 } from './styles';
-import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi';
-import { MapIcon } from '../../utils/MapIcon';
+import { FiArrowLeft, FiPlus, FiX, FiXCircle, FiCheck } from 'react-icons/fi';
+import { MapIcon } from '../../../utils/MapIcon';
 
-function EditOrphanage() {
+function ApproveOrphanage() {
     const params = useParams<{ id: string }>();
-    const { goBack } = useHistory();
+    const history = useHistory();
 
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
@@ -43,11 +44,12 @@ function EditOrphanage() {
                     longitude,
                 } = response.data.orphanage;
 
+                setPosition({ latitude, longitude });
+
                 setName(name);
                 setAbout(about);
                 setInstructions(instructions);
                 setContact(contact);
-                setPosition({ latitude, longitude })
                 setOpenningHours(openning_hours);
                 setOpenOnWeekends(open_on_weekends);
 
@@ -55,9 +57,7 @@ function EditOrphanage() {
             });
     }, [params.id]);
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-
+    async function approveOrphanage() {
         const { latitude, longitude } = position;
 
         const data = new FormData();
@@ -78,8 +78,14 @@ function EditOrphanage() {
 
         await api.put(`/orphanages/${params.id}`, data)
             .then(response => {
-                goBack();
+                history.goBack();
             });
+    };
+
+    async function refuseOrphanage() {
+        await api.delete(`/orphanages/${params.id}`);
+        
+        await history.goBack();
     };
 
     function handleMapClick(e: any) {
@@ -118,7 +124,7 @@ function EditOrphanage() {
                 <Sidebar.Logo />
 
                 <Sidebar.Footer>
-                    <Sidebar.Button type={'button'} onClick={goBack}>
+                    <Sidebar.Button type={'button'} onClick={history.goBack}>
                         <FiArrowLeft size={24} color="#FFF" />
                     </Sidebar.Button>
                 </Sidebar.Footer>
@@ -126,7 +132,7 @@ function EditOrphanage() {
 
             <Content>
                 <Form.FormWrapper>
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
                         <Form.Fieldset>
                             <Form.Legend>Dados</Form.Legend>
 
@@ -139,12 +145,16 @@ function EditOrphanage() {
                                 <TileLayer
                                     url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                                 />
-
-                                {position.latitude === 0 ?
-                                    null
-                                    :
-                                    <Marker interactive={false} icon={MapIcon} position={[position.latitude, position.longitude]} />
+                                {
+                                    position.latitude !== 0 ?
+                                        <Marker
+                                            interactive={false}
+                                            icon={MapIcon}
+                                            position={[position.latitude, position.longitude]}
+                                        />
+                                        : null
                                 }
+
                             </Map>
 
                             <Form.InputWrapper>
@@ -169,7 +179,7 @@ function EditOrphanage() {
                                 <Form.Label htmlFor="images">Fotos</Form.Label>
 
                                 <Form.ImagesWrapper>
-                                    {imagesPreview.map((image: { id?: number, url: string }, i) => {
+                                    {imagesPreview?.map((image: { id?: number, url: string }, i) => {
                                         return (
                                             <div key={image.url}>
                                                 <Form.ImageWrapper >
@@ -228,17 +238,22 @@ function EditOrphanage() {
                             </Form.InputWrapper>
 
                         </Form.Fieldset>
-
-                        <Form.Submit type="submit">
-                            Confirmar
-                    </Form.Submit>
-
                     </Form>
+                    <Form.ButtonWrapper>
+                        <Form.Button onClick={refuseOrphanage}>
+                            <FiXCircle size={24} color="#fff" />
+                                Recusar
+                        </Form.Button>
+                        <Form.Button onClick={approveOrphanage}>
+                            <FiCheck size={24} color="#fff" />
+                                Aceitar
+                        </Form.Button>
+                    </Form.ButtonWrapper>
                 </Form.FormWrapper>
             </Content>
 
         </Container>
-    )
-}
+    );
+};
 
-export default EditOrphanage;
+export default ApproveOrphanage;

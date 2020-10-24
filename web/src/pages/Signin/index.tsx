@@ -1,9 +1,6 @@
 import React, { useState, FormEvent, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { FiArrowLeft, FiCheck } from 'react-icons/fi';
-import logo from '../../images/map-marker.svg';
-
 import {
     Container,
     Banner,
@@ -24,6 +21,8 @@ import {
     Button,
     Error
 } from './styles';
+import { FiArrowLeft, FiCheck } from 'react-icons/fi';
+import logo from '../../images/icons/map-marker.svg';
 
 import { login } from '../../services/user';
 import { UserContext } from '../../contexts/UserContext';

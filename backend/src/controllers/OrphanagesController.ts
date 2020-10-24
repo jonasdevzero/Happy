@@ -125,9 +125,9 @@ export default {
 
             // Deleting images related to the orphanage and deleting the orphanage.
             await imagesRepository.delete({ orphanage: { id: Number(id) } });
-            await orphanagesRepository.delete(id);
+            const orphanage = await orphanagesRepository.delete(id);
 
-            return res.status(200);
+            return res.status(200).json({ orphanage });
         } catch (err) {
             console.log('[Error on delete orphanage] -> ', err);
             return res.status(500).json({ error: 'Internal Server Error' });

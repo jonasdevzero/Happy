@@ -14,7 +14,7 @@ import {
     City,
     Button
 } from './styles';
-import logo from '../../images/map-marker.svg';
+import logo from '../../images/icons/map-marker.svg';
 
 interface SidebarChildren {
     children: React.ReactNode;

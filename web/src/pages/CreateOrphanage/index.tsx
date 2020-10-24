@@ -6,7 +6,7 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 
 import { FiArrowLeft, FiPlus, FiX } from "react-icons/fi";
 import { MapIcon } from '../../utils/MapIcon';
-import created from '../../images/created.svg';
+import created from '../../images/icons/created.svg';
 
 import {
   ConfirmButton,

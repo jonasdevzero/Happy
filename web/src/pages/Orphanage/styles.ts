@@ -5,7 +5,7 @@ export const Container = styled.div`
     min-height: 100vh;
 `;
 
-export const Inner = styled.main`
+export const Content = styled.main`
     flex: 1;
 `;
 
