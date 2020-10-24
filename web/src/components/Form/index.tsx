@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
     Container,
+    FormWrapper,
     Fieldset,
     Legend,
     TextArea,
@@ -19,7 +20,6 @@ import {
     Submit,
     ButtonWrapper,
     Button,
-    FormWrapper
 } from './styles';
 
 interface FormProps {
@@ -57,6 +57,10 @@ interface ButtonProps {
 
 function Form({ children, onSubmit }: FormProps) {
     return <Container onSubmit={onSubmit}>{children}</Container>;
+};
+
+Form.FormWrapper = function FormFormWrapper({ children }: { children: React.ReactNode }) {
+    return <FormWrapper>{children}</FormWrapper>
 };
 
 Form.Fieldset = function FormFieldset({ children, ...props }: { children: React.ReactNode }) {
@@ -162,10 +166,6 @@ Form.Submit = function FormSubmit({ children, type }: { children: React.ReactNod
 
 Form.ButtonWrapper = function FormButtonWrapper({ children }: { children: React.ReactNode }) {
     return <ButtonWrapper>{children}</ButtonWrapper>
-};
-
-Form.FormWrapper = function FormFormWrapper({ children }: { children: React.ReactNode }) {
-    return <FormWrapper>{children}</FormWrapper>
 };
 
 Form.Button = function FormButton({ children, onClick, type }: ButtonProps) {

@@ -1,5 +1,14 @@
 import styled from 'styled-components/macro';
 
+export const FormWrapper = styled.div`
+    width: 70rem;
+    margin: 64px auto;
+
+    background: #FFFFFF;
+    border: .1rem solid #D3E2E5;
+    border-radius: 20px;
+`;
+
 export const Container = styled.form`
     padding: 6.4rem 8rem;
 
@@ -199,18 +208,17 @@ export const Button = styled.button`
     font-size: 1.8rem;
     color: #fff;
     cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        margin-right: 1rem;
+    };
 
     background-color: #FF669D;
     & + & {
         background-color: #3CDC8C;
     };
-`;
-
-export const FormWrapper = styled.div`
-    width: 70rem;
-    margin: 64px auto;
-
-    background: #FFFFFF;
-    border: .1rem solid #D3E2E5;
-    border-radius: 20px;
 `;

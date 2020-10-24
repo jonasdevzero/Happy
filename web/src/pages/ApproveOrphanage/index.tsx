@@ -9,7 +9,7 @@ import {
     Container,
     Content
 } from './styles';
-import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi';
+import { FiArrowLeft, FiPlus, FiX, FiXCircle, FiCheck } from 'react-icons/fi';
 import { MapIcon } from '../../utils/MapIcon';
 
 function ApproveOrphanage() {
@@ -235,9 +235,11 @@ function ApproveOrphanage() {
                     </Form>
                     <Form.ButtonWrapper>
                             <Form.Button onClick={refuseOrphanage}>
+                                <FiXCircle size={24} color="#fff" />
                                 Recusar
                         </Form.Button>
                             <Form.Button onClick={approveOrphanage}>
+                                <FiCheck size={24} color="#fff" />
                                 Aceitar
                         </Form.Button>
                         </Form.ButtonWrapper>
