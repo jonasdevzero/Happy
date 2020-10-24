@@ -54,9 +54,6 @@ function Signin() {
 
             const { id, name, email } = user
 
-            // if (setUser) {
-            //     setUser(userData);
-            // };
             setUser!({ id, name, email, token });
             history.push('/dashboard');
         });

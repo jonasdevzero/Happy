@@ -41,7 +41,7 @@ function EditOrphanage() {
                     images,
                     latitude,
                     longitude,
-                } = response.data;
+                } = response.data.orphanage;
 
                 setName(name);
                 setAbout(about);

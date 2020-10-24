@@ -14,11 +14,13 @@ export function useAuth() {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('token') as string);
         if (token) {
-            api.post('/user/auth', { token }).then(response => {
-                const { user: { id, name, email } } = response.data;
-                setUser({ id, name, email, token });
-            })
-        }
+            api.post('/users/auth', { token })
+                .then(response => {
+                    const { user: { id, name, email } } = response.data;
+                    
+                    setUser({ id, name, email, token });
+                });
+        };
     }, []);
 
     return { user, setUser };
