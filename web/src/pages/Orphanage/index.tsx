@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from "react-router-dom";
 import api from '../../services/api';
 
 import { Map, Marker, TileLayer } from "react-leaflet";
 
-// import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo, FiArrowLeft } from "react-icons/fi";
 import { MapIcon } from '../../utils/MapIcon';
 
@@ -27,7 +27,7 @@ import {
   OpenDetails,
   DetailHour,
   DetailOpenOnWeekends,
-  // Contact
+  Contact,
 } from './styles';
 
 interface Orphanage {
@@ -38,6 +38,7 @@ interface Orphanage {
   longitude: number;
   openning_hours: string;
   open_on_weekends: string;
+  contact: number;
   images: Array<{
     id: number;
     url: string;
@@ -138,7 +139,7 @@ export default function Orphanage() {
               </DetailHour>
               {orphanage?.open_on_weekends ?
                 <DetailOpenOnWeekends>
-                  <FiInfo size={32} color="#FF669D" />
+                  <FiInfo size={32} color="#39CC83" />
                   Atendemos <br />
                   fim de semana
                 </DetailOpenOnWeekends>
@@ -151,10 +152,10 @@ export default function Orphanage() {
               }
             </OpenDetails>
 
-            {/* <Contact type="button">
-              <FaWhatsapp size={20} color="#FFF" />
+            <Contact href={`https://wa.me/+55${orphanage?.contact}`} target='_blank' rel="noopener noreferrer">
+              <FaWhatsapp size={20}/>
               Entrar em contato
-            </Contact> */}
+            </Contact>
           </DetailsContent>
         </Details>
       </Inner>

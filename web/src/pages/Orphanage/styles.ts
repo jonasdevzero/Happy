@@ -144,7 +144,7 @@ export const DetailOpenOnWeekends = styled.div`
     };
 `;
 
-export const Contact = styled.button`
+export const Contact = styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,8 +157,13 @@ export const Contact = styled.button`
     font-weight: 800;
     background: #3CDC8C;
     cursor: pointer;
+    text-decoration: none;
     
     transition: background-color 0.2s;
+
+    svg {
+        margin-right: 1rem;
+    };
 
     &:hover {
         margin-right: 1.6rem;
