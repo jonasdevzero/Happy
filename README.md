@@ -5,6 +5,7 @@
 
 * [About the Project](#about-the-project)
   * [Built with](#build-with)
+* [Deploy](#deploy)
 * [Getting started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Instalation](#instalation)
@@ -40,6 +41,9 @@ backend -
 web - 
 - [react native](https://reactnative.dev/)
 - [expo](https://expo.io/)
+
+## Deploy
+https://happy-devzero.netlify.app/
 
 ## Getting started
 To get a local copy up and running follow these simple example steps.
