@@ -13,7 +13,13 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://happy-devzero.netlify.app");
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "*")
+    app.use(cors());
+    next();
+});
 app.use(express.json());
 app.use(routes);
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
