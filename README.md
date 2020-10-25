@@ -43,7 +43,7 @@ web -
 - [expo](https://expo.io/)
 
 ## Deploy
-https://happy-devzero.netlify.app/
+https://happy-devzero.netlify.app/ - Use 80% zoom
 
 ## Getting started
 To get a local copy up and running follow these simple example steps.
