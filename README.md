@@ -18,36 +18,19 @@
 Created during nlw3 .This project is an orphanage search site, aimed at visiting and making children happier. Contain 4 pages: Home, orphanagesMap, orphanages and createOrphanage.
 The data is stored in a sqlite database, with upload image api and orphanages api.
 
-### Built with
+### Built with 
 
-#### Languages:
-
-web, backend and mobile - [typescript](https://www.typescriptlang.org/)
-
-#### Frameworks: 
-
-Web - [React](https://reactjs.org/)
-mobile - [react native](https://reactnative.dev/)
-
-#### Libraries:
-web -
-- [react-icons](https://react-icons.github.io/react-icons/)
-- [leaflet](https://leafletjs.com/)
-- [react-leaflet](https://react-leaflet.js.org/)
-- [axios](https://github.com/axios/axios)
-- [Mapbox](https://mapbox.com)
-
-backend - 
-- [express](https://expressjs.com/)
-- [express-async-errors](https://www.npmjs.com/package/express-async-errors)
-- [sqlite3](https://www.sqlite.org/index.html)
-- [typeorm](https://typeorm.io/#/)
-- [yup](https://github.com/jquense/yup)
-- [cors](https://www.npmjs.com/package/cors)
-- [multer](https://www.npmjs.com/package/multer)
-
-mobile - 
-- [expo](https://expo.io/)
+|                   Frontend                         |                         Backend                             |          Mobile             |
+|----------------------------------------------------|-------------------------------------------------------------|-----------------------------|
+|        [React](https://reactjs.org/)               |          [express](https://expressjs.com/pt-br/)            |   [expo](https://expo.io/)  |
+|[styled-components](https://styled-components.com/) |[express-async-errors](https://www.npmjs.com/package/express-async-errors)|[react native](https://reactnative.dev/)        | 
+|[react-icons](https://react-icons.github.io/react-icons/)|   [multer](https://www.npmjs.com/package/multer)       |                             |
+|       [leaflet](https://leafletjs.com/)            |         [sqlite3](https://www.sqlite.org/index.html)        |                             |
+|      [react-leaflet](https://react-leaflet.js.org/)|        [bcryptjs](https://www.npmjs.com/package/bcryptjs)   |                             |
+|      [axios](https://github.com/axios/axios)       |               [cors](https://www.npmjs.com/package/co)      |                             |
+|  [Mapbox](https://mapbox.com)                      |                  [nodemon](https://nodemon.io/)             |
+|                                                    |                 [typeorm](https://typeorm.io/#/)            |
+|                                                    |                [yup](https://github.com/jquense/yup)        |
 
 
 ## Deploy
