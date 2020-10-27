@@ -22,17 +22,12 @@ The data is stored in a sqlite database, with upload image api and orphanages ap
 
 #### Languages:
 
-web, backend and mobile -
-- [typescript](https://www.typescriptlang.org/)
+web, backend and mobile - [typescript](https://www.typescriptlang.org/)
 
 #### Frameworks: 
 
-Web -
-- [React](https://reactjs.org/)
-
-mobile - 
-
-- [react native](https://reactnative.dev/)
+Web - [React](https://reactjs.org/)
+mobile - [react native](https://reactnative.dev/)
 
 #### Libraries:
 web -
