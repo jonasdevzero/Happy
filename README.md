@@ -20,9 +20,22 @@ The data is stored in a sqlite database, with upload image api and orphanages ap
 
 ### Built with
 
+#### Languages:
+
+web, backend and mobile -
+- [typescript](https://www.typescriptlang.org/)
+
+#### Frameworks: 
+
 Web -
 - [React](https://reactjs.org/)
-- [typescript](https://www.typescriptlang.org/)
+
+mobile - 
+
+- [react native](https://reactnative.dev/)
+
+#### Libraries:
+web -
 - [react-icons](https://react-icons.github.io/react-icons/)
 - [leaflet](https://leafletjs.com/)
 - [react-leaflet](https://react-leaflet.js.org/)
@@ -30,7 +43,6 @@ Web -
 - [Mapbox](https://mapbox.com)
 
 backend - 
-- [typescript](https://www.typescriptlang.org)
 - [express](https://expressjs.com/)
 - [express-async-errors](https://www.npmjs.com/package/express-async-errors)
 - [sqlite3](https://www.sqlite.org/index.html)
@@ -39,9 +51,9 @@ backend -
 - [cors](https://www.npmjs.com/package/cors)
 - [multer](https://www.npmjs.com/package/multer)
 
-web - 
-- [react native](https://reactnative.dev/)
+mobile - 
 - [expo](https://expo.io/)
+
 
 ## Deploy
 https://happy-devzero.netlify.app/ - Use 80% zoom
