@@ -4,12 +4,13 @@
 ## Index
 
 * [About the Project](#about-the-project)
-  * [Built with](#build-with)
+  * [Built with](#built-with)
 * [Deploy](#deploy)
 * [Getting started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Instalation](#instalation)
 * [Contributing](#contributing)
+  *[What Contribute](#what-contribute)
 * [Contact](#contact)
 * [Knowledge Acquired](#knowledge-acquired)
 
@@ -78,7 +79,7 @@ Contributions are very welcome :smiley:
 4. Push to the Branch (git push origin feature/AmazingFeature)
 5. Open a Pull Request
 
-### What contribute?
+### What contribute
 - Responsivity
 - Optimization
 - Security
