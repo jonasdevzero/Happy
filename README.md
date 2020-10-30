@@ -10,7 +10,7 @@
   * [Prerequisites](#prerequisites)
   * [Instalation](#instalation)
 * [Contributing](#contributing)
-  *[What Contribute](#what-contribute)
+  * [What Contribute](#what-contribute)
 * [Contact](#contact)
 * [Knowledge Acquired](#knowledge-acquired)
 
