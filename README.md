@@ -1,11 +1,11 @@
 <h1 align="center">Happy</h1>
-<img src="https://github.com/jonasdevzero/MediaHub/blob/master/projects/happy/home.PNG" align="center" alt="Happy - landing page" />
+<img src="https://github.com/jonasdevzero/MediaHub/blob/master/projects/happy/home.PNG" align="center" alt="" />
 
 ## Index
 
 * [About the Project](#about-the-project)
   * [Built with](#built-with)
-* [Gif](#gif)
+* [Preview](#preview)
 * [Deploy](#deploy)
 * [Getting started](#getting-started)
   * [Prerequisites](#prerequisites)
@@ -35,11 +35,13 @@ The data is stored in a sqlite database, with upload image api and orphanages ap
 |                                                    |                [yup](https://github.com/jquense/yup)        |
 
 
+<h2 align="center">Preview</h2>
+<p align='center'>
+ <img src='https://github.com/jonasdevzero/MediaHub/blob/master/projects/happy/gif.gif' atl='' />
+</p>
+
 ## Deploy
 https://happy-devzero.netlify.app/ - Use 80% zoom
-
-## Gif
-<p align='center'><img src='https://github.com/jonasdevzero/MediaHub/blob/master/projects/happy/gif.gif' atl='gif' /></p>
 
 ## Getting started
 To get a local copy up and running follow these simple example steps.
